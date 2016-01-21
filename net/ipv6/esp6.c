@@ -265,6 +265,8 @@ static int esp6_output(struct xfrm_state *x, struct sk_buff *skb)
 	kfree(tmp);
 
 error:
+	if(err<0)
+		printk(KERN_ERR "ADDLOG IPV6 esp6_output--> err:%d",err);
 	return err;
 }
 
@@ -283,7 +285,10 @@ static int esp_input_done2(struct sk_buff *skb, int err)
 	kfree(ESP_SKB_CB(skb)->tmp);
 
 	if (unlikely(err))
+	{
+		printk(KERN_ERR "ADDLOG esp_input_done2 err:%d ",err);
 		goto out;
+	}
 
 	if (skb_copy_bits(skb, skb->len - alen - 2, nexthdr, 2))
 		BUG();
@@ -291,8 +296,8 @@ static int esp_input_done2(struct sk_buff *skb, int err)
 	err = -EINVAL;
 	padlen = nexthdr[0];
 	if (padlen + 2 + alen >= elen) {
-		LIMIT_NETDEBUG(KERN_WARNING "ipsec esp packet is garbage "
-			       "padlen=%d, elen=%d\n", padlen + 2, elen - alen);
+		printk(KERN_ERR "ADDLOG esp_input_done2 ipsec esp packet is garbage "
+			       "padlen=%d, elen=%d,err:%d\n", padlen + 2, elen - alen,err);
 		goto out;
 	}
 
@@ -309,7 +314,10 @@ static int esp_input_done2(struct sk_buff *skb, int err)
 
 	/* RFC4303: Drop dummy packets without any error */
 	if (err == IPPROTO_NONE)
+	{
+		printk(KERN_ERR "ADDLOG esp_input_done2 err == EINVAL ");
 		err = -EINVAL;
+	}
 
 out:
 	return err;
@@ -343,16 +351,19 @@ static int esp6_input(struct xfrm_state *x, struct sk_buff *skb)
 
 	if (!pskb_may_pull(skb, sizeof(*esph) + crypto_aead_ivsize(aead))) {
 		ret = -EINVAL;
+		printk(KERN_ERR "ADDLOG esp6_input--> !pskb_may_pull  ");
 		goto out;
 	}
 
 	if (elen <= 0) {
 		ret = -EINVAL;
+		printk(KERN_ERR "ADDLOG esp6_input--> elen:%d ",elen);
 		goto out;
 	}
 
 	if ((nfrags = skb_cow_data(skb, 0, &trailer)) < 0) {
 		ret = -EINVAL;
+		printk(KERN_ERR "ADDLOG esp6_input--> nfrags:%d ",nfrags);
 		goto out;
 	}
 
@@ -370,8 +381,10 @@ static int esp6_input(struct xfrm_state *x, struct sk_buff *skb)
 
 	tmp = esp_alloc_tmp(aead, nfrags + sglists, seqhilen);
 	if (!tmp)
+	{
+		printk(KERN_ERR "ADDLOG esp6_input--> !tmp ");
 		goto out;
-
+	}
 	ESP_SKB_CB(skb)->tmp = tmp;
 	seqhi = esp_tmp_seqhi(tmp);
 	iv = esp_tmp_iv(aead, tmp, seqhilen);
@@ -404,7 +417,10 @@ static int esp6_input(struct xfrm_state *x, struct sk_buff *skb)
 
 	ret = crypto_aead_decrypt(req);
 	if (ret == -EINPROGRESS)
+	{
+		printk(KERN_ERR "ADDLOG esp6_input--> EINPROGRESS ");
 		goto out;
+	}
 
 	ret = esp_input_done2(skb, ret);
 
@@ -449,7 +465,7 @@ static void esp6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 	if (type == NDISC_REDIRECT)
 		ip6_redirect(skb, net, 0, 0);
 	else
-		ip6_update_pmtu(skb, net, info, 0, 0);
+		ip6_update_pmtu(skb, net, info, 0, 0, INVALID_UID);
 	xfrm_state_put(x);
 }
 

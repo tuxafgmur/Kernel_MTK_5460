@@ -755,8 +755,11 @@ unsigned int datagram_poll(struct file *file, struct socket *sock,
 
 	/* exceptional events? */
 	if (sk->sk_err || !skb_queue_empty(&sk->sk_error_queue))
+	{
 		mask |= POLLERR |
 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? POLLPRI : 0);
+		printk(KERN_ERR "ADDLOG datagram_poll mask:%u",mask);
+	}
 
 	if (sk->sk_shutdown & RCV_SHUTDOWN)
 		mask |= POLLRDHUP | POLLIN | POLLRDNORM;
@@ -766,6 +769,10 @@ unsigned int datagram_poll(struct file *file, struct socket *sock,
 	/* readable? */
 	if (!skb_queue_empty(&sk->sk_receive_queue))
 		mask |= POLLIN | POLLRDNORM;
+	else
+	{
+		printk(KERN_ERR "ADDLOG datagram_poll sk_queue_empty mask:%u",mask);
+	}
 
 	/* Connection-based need to check for termination and startup */
 	if (connection_based(sk)) {

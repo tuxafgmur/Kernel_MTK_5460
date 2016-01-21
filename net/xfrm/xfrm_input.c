@@ -130,6 +130,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
 		sp = secpath_dup(skb->sp);
 		if (!sp) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINERROR);
+			printk(KERN_ERR "ADDLOG xfrm_input--> !sp ");
 			goto drop;
 		}
 		if (skb->sp)
@@ -144,12 +145,14 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
 	seq = 0;
 	if (!spi && (err = xfrm_parse_spi(skb, nexthdr, &spi, &seq)) != 0) {
 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINHDRERROR);
+		printk(KERN_ERR "ADDLOG xfrm_input--> !spi,err:%d ",err);
 		goto drop;
 	}
 
 	do {
 		if (skb->sp->len == XFRM_MAX_DEPTH) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINBUFFERERROR);
+			printk(KERN_ERR "ADDLOG xfrm_input--> len==MAX_DEPTH ");
 			goto drop;
 		}
 
@@ -157,6 +160,7 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
 		if (x == NULL) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINNOSTATES);
 			xfrm_audit_state_notfound(skb, family, spi, seq);
+			printk(KERN_ERR "ADDLOG xfrm_input--> x==null ");
 			goto drop;
 		}
 
@@ -170,16 +174,19 @@ int xfrm_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
 
 		if ((x->encap ? x->encap->encap_type : 0) != encap_type) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEMISMATCH);
+			printk(KERN_ERR "ADDLOG xfrm_input--> x->encap->encap_type:%d,encap_type:%d ",x->encap->encap_type,encap_type);
 			goto drop_unlock;
 		}
 
 		if (x->repl->check(x, skb, seq)) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATESEQERROR);
+			printk(KERN_ERR "ADDLOG xfrm_input--> check:%pS ",x->repl->check);
 			goto drop_unlock;
 		}
 
 		if (xfrm_state_check_expire(x)) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEEXPIRED);
+			printk(KERN_ERR "ADDLOG xfrm_input--> check_expire ");
 			goto drop_unlock;
 		}
 
@@ -206,6 +213,7 @@ resume:
 				x->stats.integrity_failed++;
 			}
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEPROTOERROR);
+			printk(KERN_ERR "ADDLOG xfrm_input--> nexthdr <= 0 ");
 			goto drop_unlock;
 		}
 
@@ -214,6 +222,7 @@ resume:
 
 		if (async && x->repl->recheck(x, skb, seq)) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATESEQERROR);
+			printk(KERN_ERR "ADDLOG xfrm_input--> x->repl->recheck:%pS ",x->repl->recheck);
 			goto drop_unlock;
 		}
 
@@ -231,11 +240,15 @@ resume:
 		if (x->sel.family == AF_UNSPEC) {
 			inner_mode = xfrm_ip2inner_mode(x, XFRM_MODE_SKB_CB(skb)->protocol);
 			if (inner_mode == NULL)
+			{
+				printk(KERN_ERR "ADDLOG xfrm_input--> inner_mode==NULL ");
 				goto drop;
+			}
 		}
 
 		if (inner_mode->input(x, skb)) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINSTATEMODEERROR);
+			printk(KERN_ERR "ADDLOG xfrm_input--> inner_mode->input:%pS ",inner_mode->input);
 			goto drop;
 		}
 
@@ -254,6 +267,7 @@ resume:
 		err = xfrm_parse_spi(skb, nexthdr, &spi, &seq);
 		if (err < 0) {
 			XFRM_INC_STATS(net, LINUX_MIB_XFRMINHDRERROR);
+			printk(KERN_ERR "ADDLOG xfrm_input--> inner_mode->input:%pS ",inner_mode->input);
 			goto drop;
 		}
 	} while (!err);

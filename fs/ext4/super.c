@@ -2811,6 +2811,7 @@ static int ext4_lazyinit_thread(void *arg)
 	unsigned long next_wakeup, cur;
 
 	BUG_ON(NULL == eli);
+	set_freezable();
 
 cont_thread:
 	while (true) {
@@ -2850,7 +2851,7 @@ cont_thread:
 
 		schedule_timeout_interruptible(next_wakeup - cur);
 
-		if (kthread_should_stop()) {
+		if (kthread_freezable_should_stop(NULL)) {
 			ext4_clear_request_list();
 			goto exit_thread;
 		}
@@ -3317,7 +3318,11 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
 		logical_sb_block = sb_block;
 	}
 
+#if defined(CONFIG_CMA) && defined(CONFIG_MTK_SVP)
+	if (!(bh = sb_bread_unmovable(sb, logical_sb_block))) {
+#else
 	if (!(bh = sb_bread(sb, logical_sb_block))) {
+#endif
 		ext4_msg(sb, KERN_ERR, "unable to read superblock");
 		goto out_fail;
 	}
@@ -3517,7 +3522,11 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
 		brelse(bh);
 		logical_sb_block = sb_block * EXT4_MIN_BLOCK_SIZE;
 		offset = do_div(logical_sb_block, blocksize);
+#if defined(CONFIG_CMA) && defined(CONFIG_MTK_SVP)
+		bh = sb_bread_unmovable(sb, logical_sb_block);
+#else
 		bh = sb_bread(sb, logical_sb_block);
+#endif
 		if (!bh) {
 			ext4_msg(sb, KERN_ERR,
 			       "Can't read superblock on 2nd try");
@@ -3739,7 +3748,11 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
 
 	for (i = 0; i < db_count; i++) {
 		block = descriptor_loc(sb, logical_sb_block, i);
+#if defined(CONFIG_CMA) && defined(CONFIG_MTK_SVP)
+		sbi->s_group_desc[i] = sb_bread_unmovable(sb, block);
+#else
 		sbi->s_group_desc[i] = sb_bread(sb, block);
+#endif
 		if (!sbi->s_group_desc[i]) {
 			ext4_msg(sb, KERN_ERR,
 			       "can't read group descriptor %d", i);

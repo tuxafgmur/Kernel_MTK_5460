@@ -111,6 +111,15 @@ obj-$(CONFIG_CRASH_DUMP) += crash_dump.o
 obj-$(CONFIG_JUMP_LABEL) += jump_label.o
 obj-$(CONFIG_CONTEXT_TRACKING) += context_tracking.o
 
+# wanglj, DATE20150806, NOTE, Bug FADALTHA-127 START
+WIKO_TYPE := $(strip $(subst ro.wiko.type =,,$(shell cat $(PWD)/../build.ini |grep ^ro.wiko.type)))
+$(warning --[wlj]--WIKO_TYPE-$(WIKO_TYPE))
+ifeq ($(WIKO_TYPE), unify)
+ccflags-y += -DCONFIG_PROJECT_WIKO_UNIFY
+$(warning --[wlj]--add new macro--CONFIG_PROJECT_WIKO_UNIFY--)
+endif
+# wanglj, Bug FADALTHA-127 END
+
 $(obj)/configs.o: $(obj)/config_data.h
 
 # config_data.h contains the same information as ikconfig.h but gzipped.

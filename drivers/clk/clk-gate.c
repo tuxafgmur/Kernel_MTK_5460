@@ -68,6 +68,10 @@ static void clk_gate_endisable(struct clk_hw *hw, int enable)
 
 static int clk_gate_enable(struct clk_hw *hw)
 {
+#if !defined(CONFIG_MTK_LEGACY) /* FIXME: only for bring up */
+	printk("[CCF] %s: %s\n", __func__, __clk_get_name(hw->clk));
+	return 0;
+#endif /* !defined(CONFIG_MTK_LEGACY) */
 	clk_gate_endisable(hw, 1);
 
 	return 0;
@@ -75,6 +79,10 @@ static int clk_gate_enable(struct clk_hw *hw)
 
 static void clk_gate_disable(struct clk_hw *hw)
 {
+#if !defined(CONFIG_MTK_LEGACY) /* FIXME: only for bring up */
+	printk("[CCF] %s: %s\n", __func__, __clk_get_name(hw->clk));
+	return;
+#endif /* !defined(CONFIG_MTK_LEGACY) */
 	clk_gate_endisable(hw, 0);
 }
 
@@ -82,6 +90,10 @@ static int clk_gate_is_enabled(struct clk_hw *hw)
 {
 	u32 reg;
 	struct clk_gate *gate = to_clk_gate(hw);
+#if !defined(CONFIG_MTK_LEGACY) /* FIXME: only for bring up */
+	printk("[CCF] %s: %s\n", __func__, __clk_get_name(hw->clk));
+	return 1;
+#endif /* !defined(CONFIG_MTK_LEGACY) */
 
 	reg = readl(gate->reg);
 

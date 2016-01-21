@@ -35,6 +35,11 @@ static u8 clk_mux_get_parent(struct clk_hw *hw)
 	int num_parents = __clk_get_num_parents(hw->clk);
 	u32 val;
 
+#if !defined(CONFIG_MTK_LEGACY) /* FIXME: only for bring up */
+	printk("[CCF] %s: %s, mux=%s\n", __func__, __clk_get_name(hw->clk),
+	       __clk_get_name(mux->hw.clk));
+	return 1;
+#endif /* !defined(CONFIG_MTK_LEGACY) */
 	/*
 	 * FIXME need a mux-specific flag to determine if val is bitwise or numeric
 	 * e.g. sys_clkin_ck's clksel field is 3 bits wide, but ranges from 0x1
@@ -72,6 +77,11 @@ static int clk_mux_set_parent(struct clk_hw *hw, u8 index)
 	u32 val;
 	unsigned long flags = 0;
 
+#if !defined(CONFIG_MTK_LEGACY) /* FIXME: only for bring up */
+	printk("[CCF] %s: %s, mux=%s, index=%u\n", __func__,
+	       __clk_get_name(hw->clk), __clk_get_name(mux->hw.clk), index);
+	return 0;
+#endif /* !defined(CONFIG_MTK_LEGACY) */
 	if (mux->table)
 		index = mux->table[index];
 

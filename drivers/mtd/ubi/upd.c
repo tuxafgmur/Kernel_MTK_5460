@@ -133,7 +133,7 @@ int ubi_start_update(struct ubi_device *ubi, struct ubi_volume *vol,
 	ubi_assert(!vol->updating && !vol->changing_leb);
 	vol->updating = 1;
 
-	vol->upd_buf = vmalloc(ubi->leb_size);
+	vol->upd_buf = kmalloc(ubi->leb_size, GFP_KERNEL);
 	if (!vol->upd_buf)
 		return -ENOMEM;
 
@@ -157,7 +157,7 @@ int ubi_start_update(struct ubi_device *ubi, struct ubi_volume *vol,
 		if (err)
 			return err;
 
-		vfree(vol->upd_buf);
+		kfree(vol->upd_buf);
 		vol->updating = 0;
 		return 0;
 	}
@@ -193,7 +193,7 @@ int ubi_start_leb_change(struct ubi_device *ubi, struct ubi_volume *vol,
 	vol->changing_leb = 1;
 	vol->ch_lnum = req->lnum;
 
-	vol->upd_buf = vmalloc(req->bytes);
+	vol->upd_buf = kmalloc(req->bytes, GFP_KERNEL);
 	if (!vol->upd_buf)
 		return -ENOMEM;
 
@@ -370,7 +370,7 @@ int ubi_more_update_data(struct ubi_device *ubi, struct ubi_volume *vol,
 			return err;
 		vol->updating = 0;
 		err = to_write;
-		vfree(vol->upd_buf);
+		kfree(vol->upd_buf);
 	}
 
 	return err;
@@ -426,7 +426,7 @@ int ubi_more_leb_change_data(struct ubi_device *ubi, struct ubi_volume *vol,
 	if (vol->upd_received == vol->upd_bytes) {
 		vol->changing_leb = 0;
 		err = count;
-		vfree(vol->upd_buf);
+		kfree(vol->upd_buf);
 	}
 
 	return err;

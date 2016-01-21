@@ -30,6 +30,9 @@ obj-$(CONFIG_ARCH_VT8500)	+= clk-vt8500.o
 obj-$(CONFIG_ARCH_ZYNQ)		+= clk-zynq.o
 obj-$(CONFIG_ARCH_TEGRA)	+= tegra/
 obj-$(CONFIG_PLAT_SAMSUNG)	+= samsung/
+ifneq ($(CONFIG_MTK_LEGACY),y)
+obj-$(CONFIG_MEDIATEK_SOLUTION) += mediatek/
+endif
 
 obj-$(CONFIG_X86)		+= x86/
 

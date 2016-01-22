@@ -6,10 +6,12 @@ MTK_CUSTOM_PATH  := $(srctree)/drivers/misc/mediatek
 
 
 #guomingyi20150127add start.
+# When environment not defined
+ifeq ($(PROJECT_NAME),)
 PROJECT_NAME := $(strip $(subst ro.project =,,$(shell cat $(PWD)/../build.ini |grep ^ro.project)))
-
 ifeq ($(strip $(PROJECT_NAME)),)
   $(warning --PROJECT_NAME -is null--please--do--lunch--$(TARGET_PRODUCT)-$(TARGET_BUILD_VARIANT)---)
+endif
 endif
 NEW_MAKE_FILE := $(PWD)/../vendor/tinno/$(ARCH_MTK_PROJECT)/$(PROJECT_NAME)/cust_kcfg/Makefile
 ifneq ($(wildcard $(NEW_MAKE_FILE)),)

@@ -1,4 +1,4 @@
-$(info IRTX:$(CONFIG_MTK_IRTX))
+#$(info IRTX:$(CONFIG_MTK_IRTX))
 
 ifeq ($(CONFIG_MTK_IRTX_SUPPORT), y)
 

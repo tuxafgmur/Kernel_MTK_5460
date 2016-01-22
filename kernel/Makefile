@@ -112,11 +112,17 @@ obj-$(CONFIG_JUMP_LABEL) += jump_label.o
 obj-$(CONFIG_CONTEXT_TRACKING) += context_tracking.o
 
 # wanglj, DATE20150806, NOTE, Bug FADALTHA-127 START
+# When environment defined
+ifeq ($(WIKO_TYPE),unify)
+ccflags-y += -DCONFIG_PROJECT_WIKO_UNIFY
+else
+# normal wanglj process
 WIKO_TYPE := $(strip $(subst ro.wiko.type =,,$(shell cat $(PWD)/../build.ini |grep ^ro.wiko.type)))
 $(warning --[wlj]--WIKO_TYPE-$(WIKO_TYPE))
 ifeq ($(WIKO_TYPE), unify)
 ccflags-y += -DCONFIG_PROJECT_WIKO_UNIFY
 $(warning --[wlj]--add new macro--CONFIG_PROJECT_WIKO_UNIFY--)
+endif
 endif
 # wanglj, Bug FADALTHA-127 END
 

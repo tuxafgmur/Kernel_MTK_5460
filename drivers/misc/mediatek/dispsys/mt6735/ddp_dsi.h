@@ -6,7 +6,7 @@
 
 #include "lcm_drv.h"
 #include "ddp_hal.h"
-#include "fbconfig_kdebug_k2.h"
+#include "../videox/mt6735/fbconfig_kdebug_k2.h"
 
 
 #ifdef __cplusplus

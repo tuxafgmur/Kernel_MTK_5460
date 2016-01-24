@@ -578,6 +578,23 @@ else
 KBUILD_CFLAGS	+= -O2
 endif
 
+KBUILD_CFLAGS += -Wno-address \
+		 -Wno-declaration-after-statement \
+		 -Wno-enum-compare \
+		 -Wno-overflow \
+		 -Wno-parentheses \
+		 -Wno-return-local-addr \
+		 -Wno-return-type \
+		 -Wno-sequence-point \
+		 -Wno-strict-prototypes \
+		 -Wno-switch \
+		 -Wno-unused-function \
+		 -Wno-unused-label \
+		 -Wno-unused-result \
+		 -Wno-unused-value \
+		 -Wno-unused-variable \
+		 -Wno-maybe-uninitialized
+
 include $(srctree)/arch/$(SRCARCH)/Makefile
 
 ifdef CONFIG_READABLE_ASM

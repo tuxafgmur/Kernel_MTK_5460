@@ -291,8 +291,8 @@ static void dprec_logger_frame_seq_begin(DISP_SESSION_TYPE session_type, unsigne
     if(dprec_met_info[session_type].begin_frm_seq != frm_sequence)
 	{
 	    __mt_update_tracing_mark_write_addr();
-        event_trace_printk(tracing_mark_write_addr, "S|%d|%s|%d\n", current->tgid, dprec_met_info[session_type].log_name, frm_sequence);
-	    dprec_met_info[session_type].begin_frm_seq = frm_sequence;
+        //  event_trace_printk(tracing_mark_write_addr, "S|%d|%s|%d\n", current->tgid, dprec_met_info[session_type].log_name, frm_sequence);
+            dprec_met_info[session_type].begin_frm_seq = frm_sequence;
     }
 }
 
@@ -309,9 +309,9 @@ static void dprec_logger_frame_seq_end(DISP_SESSION_TYPE session_type, unsigned 
     
     if(dprec_met_info[session_type].end_frm_seq != frm_sequence)
 	{
-    	__mt_update_tracing_mark_write_addr();
-        event_trace_printk(tracing_mark_write_addr, "F|%d|%s|%d\n", current->tgid, dprec_met_info[session_type].log_name, frm_sequence); 
-    	dprec_met_info[session_type].end_frm_seq = frm_sequence;
+            __mt_update_tracing_mark_write_addr();
+        //  event_trace_printk(tracing_mark_write_addr, "F|%d|%s|%d\n", current->tgid, dprec_met_info[session_type].log_name, frm_sequence); 
+            dprec_met_info[session_type].end_frm_seq = frm_sequence;
 	}
 }
 

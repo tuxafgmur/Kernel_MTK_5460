@@ -28,12 +28,12 @@ P_STP_PSM_OPID_RECORD g_stp_psm_opid_dbg = NULL;
 static UINT32 g_opid_record_num = 0;
 
 
-#define STP_PSM_LOUD_FUNC(fmt, arg...)   if(gPsmDbgLevel >= STP_PSM_LOG_LOUD){ printk(KERN_DEBUG PFX_PSM "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_PSM_DBG_FUNC(fmt, arg...)    if(gPsmDbgLevel >= STP_PSM_LOG_DBG){  printk(KERN_DEBUG PFX_PSM "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_PSM_INFO_FUNC(fmt, arg...)   if(gPsmDbgLevel >= STP_PSM_LOG_INFO){ printk(PFX_PSM "[I]%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_PSM_WARN_FUNC(fmt, arg...)   if(gPsmDbgLevel >= STP_PSM_LOG_WARN){ printk(PFX_PSM "[W]%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_PSM_LOUD_FUNC(fmt, arg...)   if(0 >= STP_PSM_LOG_LOUD){ printk(KERN_DEBUG PFX_PSM "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_PSM_DBG_FUNC(fmt, arg...)    if(0 >= STP_PSM_LOG_DBG){  printk(KERN_DEBUG PFX_PSM "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_PSM_INFO_FUNC(fmt, arg...)   if(0 >= STP_PSM_LOG_INFO){ printk(PFX_PSM "[I]%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_PSM_WARN_FUNC(fmt, arg...)   if(0 >= STP_PSM_LOG_WARN){ printk(PFX_PSM "[W]%s: "  fmt, __FUNCTION__ ,##arg);}
 #define STP_PSM_ERR_FUNC(fmt, arg...)    if(gPsmDbgLevel >= STP_PSM_LOG_ERR){  printk(PFX_PSM "[E]%s(%d):ERROR! "   fmt, __FUNCTION__ , __LINE__, ##arg);}
-#define STP_PSM_TRC_FUNC(f)              if(gPsmDbgLevel >= STP_PSM_LOG_DBG){  printk(KERN_DEBUG PFX_PSM "<%s> <%d>\n", __FUNCTION__, __LINE__);}
+#define STP_PSM_TRC_FUNC(f)              if(0 >= STP_PSM_LOG_DBG){  printk(KERN_DEBUG PFX_PSM "<%s> <%d>\n", __FUNCTION__, __LINE__);}
 
 static inline INT32 _stp_psm_notify_wmt(MTKSTP_PSM_T *stp_psm, const MTKSTP_PSM_ACTION_T action);
 static INT32  _stp_psm_thread_lock_aquire(MTKSTP_PSM_T *stp_psm);

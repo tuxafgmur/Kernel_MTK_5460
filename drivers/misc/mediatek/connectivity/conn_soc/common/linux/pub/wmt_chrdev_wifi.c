@@ -45,18 +45,18 @@ MODULE_LICENSE("Dual BSD/GPL");
 #define WIFI_LOG_WARN                 1
 #define WIFI_LOG_ERR                  0
 
-UINT32 gDbgLevel = WIFI_LOG_DBG;
+UINT32 gDbgLevel = WIFI_LOG_ERR;
 
 #define WIFI_DBG_FUNC(fmt, arg...)\
-	do {if (gDbgLevel >= WIFI_LOG_DBG) printk(PFX "%s: " fmt, __func__ , ##arg); } while (0)
+	do {if (0 >= WIFI_LOG_DBG) printk(PFX "%s: " fmt, __func__ , ##arg); } while (0)
 #define WIFI_INFO_FUNC(fmt, arg...)\
-	do {if (gDbgLevel >= WIFI_LOG_INFO) printk(PFX "%s: " fmt, __func__ , ##arg); } while (0)
+	do {if (0 >= WIFI_LOG_INFO) printk(PFX "%s: " fmt, __func__ , ##arg); } while (0)
 #define WIFI_WARN_FUNC(fmt, arg...)\
-	do {if (gDbgLevel >= WIFI_LOG_WARN) printk(PFX "%s: " fmt, __func__ , ##arg); } while (0)
+	do {if (0 >= WIFI_LOG_WARN) printk(PFX "%s: " fmt, __func__ , ##arg); } while (0)
 #define WIFI_ERR_FUNC(fmt, arg...)\
 	do {if (gDbgLevel >= WIFI_LOG_ERR) printk(PFX "%s: " fmt, __func__ , ##arg); } while (0)
 #define WIFI_TRC_FUNC(f)\
-	do {if (gDbgLevel >= WIFI_LOG_DBG) printk(PFX "<%s> <%d>\n", __func__, __LINE__); } while (0)
+	do {if (0 >= WIFI_LOG_DBG) printk(PFX "<%s> <%d>\n", __func__, __LINE__); } while (0)
 
 #define VERSION "1.0"
 

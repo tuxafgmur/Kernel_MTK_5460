@@ -51,17 +51,17 @@ struct class *gps_class = NULL;
 struct device *gps_dev = NULL;
 #endif
 
-static unsigned int gDbgLevel = GPS_LOG_INFO;
+static unsigned int gDbgLevel = GPS_LOG_ERR;
 #define GPS_DBG_FUNC(fmt, arg...)	\
-do { if (gDbgLevel >= GPS_LOG_DBG)	\
+do { if (0 >= GPS_LOG_DBG)	\
 		pr_debug(PFX "[D]%s: "  fmt, __func__ , ##arg);	\
 } while (0)
 #define GPS_INFO_FUNC(fmt, arg...)	\
-do { if (gDbgLevel >= GPS_LOG_INFO)	\
+do { if (0 >= GPS_LOG_INFO)	\
 		pr_info(PFX "[I]%s: "  fmt, __func__ , ##arg);	\
 } while (0)
 #define GPS_WARN_FUNC(fmt, arg...)	\
-do { if (gDbgLevel >= GPS_LOG_WARN)	\
+do { if (0 >= GPS_LOG_WARN)	\
 		pr_warn(PFX "[W]%s: "  fmt, __func__ , ##arg);	\
 } while (0)
 #define GPS_ERR_FUNC(fmt, arg...)	\
@@ -69,7 +69,7 @@ do { if (gDbgLevel >= GPS_LOG_ERR)	\
 		pr_err(PFX "[E]%s: "  fmt, __func__ , ##arg);	\
 } while (0)
 #define GPS_TRC_FUNC(f)	\
-do { if (gDbgLevel >= GPS_LOG_DBG)	\
+do { if (0 >= GPS_LOG_DBG)	\
 		pr_info(PFX "<%s> <%d>\n", __func__, __LINE__);	\
 } while (0)
 

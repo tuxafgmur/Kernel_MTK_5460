@@ -44,15 +44,15 @@
 #define STP_DBG_LOG_WARN                 1
 #define STP_DBG_LOG_ERR                  0
 
-unsigned int gStpDbgDbgLevel = STP_DBG_LOG_INFO;
+unsigned int gStpDbgDbgLevel = STP_DBG_LOG_ERR;
 unsigned int gStpDbgLogOut = 0;
 
-#define STP_DBG_LOUD_FUNC(fmt, arg...)   if(gStpDbgDbgLevel >= STP_DBG_LOG_LOUD){  printk(KERN_DEBUG PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_DBG_DBG_FUNC(fmt, arg...)    if(gStpDbgDbgLevel >= STP_DBG_LOG_DBG){  printk(KERN_DEBUG PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_DBG_INFO_FUNC(fmt, arg...)   if(gStpDbgDbgLevel >= STP_DBG_LOG_INFO){ printk(PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_DBG_WARN_FUNC(fmt, arg...)   if(gStpDbgDbgLevel >= STP_DBG_LOG_WARN){ printk(PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_DBG_LOUD_FUNC(fmt, arg...)   if(0 >= STP_DBG_LOG_LOUD){  printk(KERN_DEBUG PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_DBG_DBG_FUNC(fmt, arg...)    if(0 >= STP_DBG_LOG_DBG){  printk(KERN_DEBUG PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_DBG_INFO_FUNC(fmt, arg...)   if(0 >= STP_DBG_LOG_INFO){ printk(PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_DBG_WARN_FUNC(fmt, arg...)   if(0 >= STP_DBG_LOG_WARN){ printk(PFX_STP_DBG "%s: "  fmt, __FUNCTION__ ,##arg);}
 #define STP_DBG_ERR_FUNC(fmt, arg...)    if(gStpDbgDbgLevel >= STP_DBG_LOG_ERR){  printk(PFX_STP_DBG "%s: "   fmt, __FUNCTION__ ,##arg);}
-#define STP_DBG_TRC_FUNC(f)              if(gStpDbgDbgLevel >= STP_DBG_LOG_DBG){  printk(KERN_DEBUG PFX_STP_DBG "<%s> <%d>\n", __FUNCTION__, __LINE__);}
+#define STP_DBG_TRC_FUNC(f)              if(0 >= STP_DBG_LOG_DBG){  printk(KERN_DEBUG PFX_STP_DBG "<%s> <%d>\n", __FUNCTION__, __LINE__);}
 
 
 MTKSTP_DBG_T *g_stp_dbg = NULL;

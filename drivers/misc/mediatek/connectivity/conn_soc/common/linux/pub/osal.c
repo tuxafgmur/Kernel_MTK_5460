@@ -214,7 +214,7 @@ INT32 osal_dbg_print(const char *str, ...)
     vsnprintf(tempString, DBG_LOG_STR_SIZE, str, args);
     va_end(args);
 
-    printk(KERN_DEBUG "%s",tempString);
+    //printk(KERN_DEBUG "%s",tempString);
 
     return 0;
 }
@@ -223,12 +223,12 @@ INT32 osal_dbg_print(const char *str, ...)
 INT32 osal_dbg_assert(INT32 expr, const char *file, INT32 line)
 {
     if (!expr){
-        printk("%s (%d)\n", file, line);
+        //printk("%s (%d)\n", file, line);
         /*BUG_ON(!expr);*/
 #ifdef CFG_COMMON_GPIO_DBG_PIN
 //package this part
         mt_set_gpio_out(GPIO70, GPIO_OUT_ZERO);
-        printk("toggle GPIO70\n");
+        //printk("toggle GPIO70\n");
         udelay(10);
         mt_set_gpio_out(GPIO70, GPIO_OUT_ONE);
 #endif
@@ -684,8 +684,8 @@ INT32 _osal_fifo_init(OSAL_FIFO *pFifo, UINT8 *buf, UINT32 size)
 
     if(!pFifo || pFifo->pFifoBody)
     {
-        printk (KERN_ERR "pFifo must be !NULL, pFifo->pFifoBody must be NULL\n");
-        printk (KERN_ERR "pFifo(0x%p), pFifo->pFifoBody(0x%p)\n", pFifo, pFifo->pFifoBody);
+        //printk (KERN_ERR "pFifo must be !NULL, pFifo->pFifoBody must be NULL\n");
+        //printk (KERN_ERR "pFifo(0x%p), pFifo->pFifoBody(0x%p)\n", pFifo, pFifo->pFifoBody);
         return -1;
     }
 
@@ -975,7 +975,7 @@ INT32 osal_fifo_init(P_OSAL_FIFO pFifo, UINT8 *buffer, UINT32 size)
 
     if(NULL != pFifo->pFifoBody)
     {
-        printk("%s:Becasue pFifo room is avialable, we clear the room and allocate them again.\n", __func__);
+        //printk("%s:Becasue pFifo room is avialable, we clear the room and allocate them again.\n", __func__);
         pFifo->FifoDeInit(pFifo->pFifoBody);
         pFifo->pFifoBody = NULL;
     }

@@ -53,11 +53,11 @@
 
 extern UINT32 wmtPlatLogLvl;
 
-#define WMT_PLAT_LOUD_FUNC(fmt, arg...)    if(wmtPlatLogLvl >= WMT_PLAT_LOG_LOUD) { printk(KERN_DEBUG DFT_TAG "[L]%s:"  fmt, __FUNCTION__ ,##arg);}
-#define WMT_PLAT_INFO_FUNC(fmt, arg...)    if(wmtPlatLogLvl >= WMT_PLAT_LOG_INFO) { printk(KERN_ERR DFT_TAG "[I]%s:"  fmt, __FUNCTION__ ,##arg);}
-#define WMT_PLAT_WARN_FUNC(fmt, arg...)    if(wmtPlatLogLvl >= WMT_PLAT_LOG_WARN) { printk(KERN_WARNING DFT_TAG "[W]%s:"  fmt, __FUNCTION__ ,##arg);}
+#define WMT_PLAT_LOUD_FUNC(fmt, arg...)    if(0 >= WMT_PLAT_LOG_LOUD) { printk(KERN_DEBUG DFT_TAG "[L]%s:"  fmt, __FUNCTION__ ,##arg);}
+#define WMT_PLAT_INFO_FUNC(fmt, arg...)    if(0 >= WMT_PLAT_LOG_INFO) { printk(KERN_ERR DFT_TAG "[I]%s:"  fmt, __FUNCTION__ ,##arg);}
+#define WMT_PLAT_WARN_FUNC(fmt, arg...)    if(0 >= WMT_PLAT_LOG_WARN) { printk(KERN_WARNING DFT_TAG "[W]%s:"  fmt, __FUNCTION__ ,##arg);}
 #define WMT_PLAT_ERR_FUNC(fmt, arg...)     if(wmtPlatLogLvl >= WMT_PLAT_LOG_ERR)  { printk(KERN_ERR DFT_TAG "[E]%s(%d):"  fmt, __FUNCTION__ , __LINE__, ##arg);}
-#define WMT_PLAT_DBG_FUNC(fmt, arg...)     if(wmtPlatLogLvl >= WMT_PLAT_LOG_DBG)  { printk(KERN_DEBUG DFT_TAG "[D]%s:"  fmt, __FUNCTION__ ,##arg);}
+#define WMT_PLAT_DBG_FUNC(fmt, arg...)     if(0 >= WMT_PLAT_LOG_DBG)  { printk(KERN_DEBUG DFT_TAG "[D]%s:"  fmt, __FUNCTION__ ,##arg);}
 
 #endif
 

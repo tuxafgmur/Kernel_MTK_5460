@@ -24,8 +24,8 @@
 #endif
 #define DFT_TAG         "[WMT-STP-EXP]"
 
-#define WMT_STP_EXP_INFO_FUNC(fmt, arg...)   printk(DFT_TAG "[I]%s: "  fmt, __FUNCTION__ ,##arg)
-#define WMT_STP_EXP_WARN_FUNC(fmt, arg...)   printk(DFT_TAG "[W]%s: "  fmt, __FUNCTION__ ,##arg)
+#define WMT_STP_EXP_INFO_FUNC(fmt, arg...)   if (0 >= 1) {printk(DFT_TAG "[I]%s: "  fmt, __FUNCTION__ ,##arg);}
+#define WMT_STP_EXP_WARN_FUNC(fmt, arg...)   if (0 >= 1) {printk(DFT_TAG "[W]%s: "  fmt, __FUNCTION__ ,##arg);}
 #define WMT_STP_EXP_ERR_FUNC(fmt, arg...)    printk(DFT_TAG "[E]%s(%d):ERROR! "   fmt, __FUNCTION__ , __LINE__, ##arg)
 
 /*******************************************************************************

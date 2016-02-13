@@ -51,13 +51,13 @@ struct class * bt_class = NULL;
 struct device * bt_dev = NULL;
 #endif
 
-static unsigned int gDbgLevel = BT_LOG_INFO;
+static unsigned int gDbgLevel = BT_LOG_ERR;
 
-#define BT_DBG_FUNC(fmt, arg...)    if(gDbgLevel >= BT_LOG_DBG){ printk(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define BT_INFO_FUNC(fmt, arg...)   if(gDbgLevel >= BT_LOG_INFO){ printk(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define BT_WARN_FUNC(fmt, arg...)   if(gDbgLevel >= BT_LOG_WARN){ printk(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define BT_DBG_FUNC(fmt, arg...)    if(0 >= BT_LOG_DBG){ printk(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define BT_INFO_FUNC(fmt, arg...)   if(0 >= BT_LOG_INFO){ printk(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define BT_WARN_FUNC(fmt, arg...)   if(0 >= BT_LOG_WARN){ printk(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
 #define BT_ERR_FUNC(fmt, arg...)    if(gDbgLevel >= BT_LOG_ERR){ printk(PFX "%s: "   fmt, __FUNCTION__ ,##arg);}
-#define BT_TRC_FUNC(f)              if(gDbgLevel >= BT_LOG_DBG){printk(PFX "<%s> <%d>\n", __FUNCTION__, __LINE__);}
+#define BT_TRC_FUNC(f)              if(0 >= BT_LOG_DBG){printk(PFX "<%s> <%d>\n", __FUNCTION__, __LINE__);}
 
 #define VERSION "1.0"
 #define BT_NVRAM_CUSTOM_NAME "/data/BT_Addr"

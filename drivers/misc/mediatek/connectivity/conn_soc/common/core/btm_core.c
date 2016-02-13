@@ -27,14 +27,14 @@
 #define STP_BTM_LOG_WARN                 1
 #define STP_BTM_LOG_ERR                  0
 
-INT32 gBtmDbgLevel = STP_BTM_LOG_INFO;
+INT32 gBtmDbgLevel = STP_BTM_LOG_ERR;
 
-#define STP_BTM_LOUD_FUNC(fmt, arg...)   if(gBtmDbgLevel >= STP_BTM_LOG_LOUD){ printk(KERN_DEBUG PFX_BTM "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_BTM_DBG_FUNC(fmt, arg...)    if(gBtmDbgLevel >= STP_BTM_LOG_DBG){ printk(KERN_DEBUG PFX_BTM "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_BTM_INFO_FUNC(fmt, arg...)   if(gBtmDbgLevel >= STP_BTM_LOG_INFO){ printk(PFX_BTM "[I]%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_BTM_WARN_FUNC(fmt, arg...)   if(gBtmDbgLevel >= STP_BTM_LOG_WARN){ printk(PFX_BTM "[W]%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_BTM_LOUD_FUNC(fmt, arg...)   if(0 >= STP_BTM_LOG_LOUD){ printk(KERN_DEBUG PFX_BTM "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_BTM_DBG_FUNC(fmt, arg...)    if(0 >= STP_BTM_LOG_DBG){ printk(KERN_DEBUG PFX_BTM "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_BTM_INFO_FUNC(fmt, arg...)   if(0 >= STP_BTM_LOG_INFO){ printk(PFX_BTM "[I]%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_BTM_WARN_FUNC(fmt, arg...)   if(0 >= STP_BTM_LOG_WARN){ printk(PFX_BTM "[W]%s: "  fmt, __FUNCTION__ ,##arg);}
 #define STP_BTM_ERR_FUNC(fmt, arg...)    if(gBtmDbgLevel >= STP_BTM_LOG_ERR){  printk(PFX_BTM "[E]%s(%d):ERROR! "   fmt, __FUNCTION__ , __LINE__, ##arg);}
-#define STP_BTM_TRC_FUNC(f)              if(gBtmDbgLevel >= STP_BTM_LOG_DBG){ printk(KERN_DEBUG PFX_BTM "<%s> <%d>\n", __FUNCTION__, __LINE__);}
+#define STP_BTM_TRC_FUNC(f)              if(0 >= STP_BTM_LOG_DBG){ printk(KERN_DEBUG PFX_BTM "<%s> <%d>\n", __FUNCTION__, __LINE__);}
 
 
 #define ASSERT(expr)

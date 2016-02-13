@@ -53,10 +53,10 @@
 
 extern unsigned int gWmtDetectDbgLvl;
 
-#define WMT_DETECT_LOUD_FUNC(fmt, arg...)   if (gWmtDetectDbgLvl >= WMT_DETECT_LOG_LOUD) { printk(KERN_WARNING DFT_TAG"[L]%s:"  fmt, __FUNCTION__ ,##arg);}
-#define WMT_DETECT_DBG_FUNC(fmt, arg...)    if (gWmtDetectDbgLvl >= WMT_DETECT_LOG_DBG) { printk(KERN_WARNING DFT_TAG"[D]%s:"  fmt, __FUNCTION__ ,##arg);}
-#define WMT_DETECT_INFO_FUNC(fmt, arg...)   if (gWmtDetectDbgLvl >= WMT_DETECT_LOG_INFO) { printk(KERN_WARNING DFT_TAG"[I]%s:"  fmt, __FUNCTION__ ,##arg);}
-#define WMT_DETECT_WARN_FUNC(fmt, arg...)   if (gWmtDetectDbgLvl >= WMT_DETECT_LOG_WARN) { printk(KERN_WARNING DFT_TAG"[W]%s(%d):"  fmt, __FUNCTION__ , __LINE__, ##arg);}
+#define WMT_DETECT_LOUD_FUNC(fmt, arg...)   if (0 >= WMT_DETECT_LOG_LOUD) { printk(KERN_WARNING DFT_TAG"[L]%s:"  fmt, __FUNCTION__ ,##arg);}
+#define WMT_DETECT_DBG_FUNC(fmt, arg...)    if (0 >= WMT_DETECT_LOG_DBG) { printk(KERN_WARNING DFT_TAG"[D]%s:"  fmt, __FUNCTION__ ,##arg);}
+#define WMT_DETECT_INFO_FUNC(fmt, arg...)   if (0 >= WMT_DETECT_LOG_INFO) { printk(KERN_WARNING DFT_TAG"[I]%s:"  fmt, __FUNCTION__ ,##arg);}
+#define WMT_DETECT_WARN_FUNC(fmt, arg...)   if (0 >= WMT_DETECT_LOG_WARN) { printk(KERN_WARNING DFT_TAG"[W]%s(%d):"  fmt, __FUNCTION__ , __LINE__, ##arg);}
 #define WMT_DETECT_ERR_FUNC(fmt, arg...)    if (gWmtDetectDbgLvl >= WMT_DETECT_LOG_ERR) { printk(KERN_WARNING DFT_TAG"[E]%s(%d):"  fmt, __FUNCTION__ , __LINE__, ##arg);}
 
 #define WMT_IOC_MAGIC        		'w'

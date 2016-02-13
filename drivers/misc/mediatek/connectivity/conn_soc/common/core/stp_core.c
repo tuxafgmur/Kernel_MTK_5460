@@ -28,7 +28,7 @@
 
 #define STP_DEL_SIZE   2    /* STP delimiter length */
 
-UINT32 gStpDbgLvl = STP_LOG_INFO;
+UINT32 gStpDbgLvl = STP_LOG_ERR;
 
 #define REMOVE_USELESS_LOG 1
 

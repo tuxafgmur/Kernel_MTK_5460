@@ -55,11 +55,11 @@
 
 extern unsigned int gStpDbgLvl;
 
-#define STP_DBG_FUNC(fmt, arg...)    if(gStpDbgLvl >= STP_LOG_DBG){  osal_dbg_print(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
-#define STP_INFO_FUNC(fmt, arg...)   if(gStpDbgLvl >= STP_LOG_INFO){ osal_dbg_print(PFX "%s:[I] "  fmt, __FUNCTION__ ,##arg);}
-#define STP_WARN_FUNC(fmt, arg...)   if(gStpDbgLvl >= STP_LOG_WARN){ osal_dbg_print(PFX "%s:[W] "  fmt, __FUNCTION__ ,##arg);}
+#define STP_DBG_FUNC(fmt, arg...)    if(0  >= STP_LOG_DBG){  osal_dbg_print(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}
+#define STP_INFO_FUNC(fmt, arg...)   if(0 >= STP_LOG_INFO){ osal_dbg_print(PFX "%s:[I] "  fmt, __FUNCTION__ ,##arg);}
+#define STP_WARN_FUNC(fmt, arg...)   if(0 >= STP_LOG_WARN){ osal_dbg_print(PFX "%s:[W] "  fmt, __FUNCTION__ ,##arg);}
 #define STP_ERR_FUNC(fmt, arg...)    if(gStpDbgLvl >= STP_LOG_ERR){  osal_dbg_print(PFX "%s:[E] "   fmt, __FUNCTION__ ,##arg);}
-#define STP_TRC_FUNC(f)              if(gStpDbgLvl >= STP_LOG_DBG){  osal_dbg_print(PFX "<%s> <%d>\n", __FUNCTION__, __LINE__);}
+#define STP_TRC_FUNC(f)              if(0 >= STP_LOG_DBG){  osal_dbg_print(PFX "<%s> <%d>\n", __FUNCTION__, __LINE__);}
 
 #define STP_DUMP_PACKET_HEAD(a, b, c)     if(gStpDbgLvl >= STP_LOG_PKHEAD){stp_dump_data(a, b, c);}
 #define STP_TRACE_FUNC(fmt, arg...)        if(gStpDbgLvl >= STP_LOG_DBG){  osal_dbg_print(PFX "%s: "  fmt, __FUNCTION__ ,##arg);}

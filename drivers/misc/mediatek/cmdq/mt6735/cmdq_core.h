@@ -24,20 +24,20 @@ extern DumpFirstErrorStruct gCmdqDumpFirstError;
 #endif
 
 #define CMDQ_LOG(string, args...) \
-	if (1) \
+	if (0) \
 	{ \
 	pr_err("[CMDQ]"string, ##args); \
 	cmdq_core_save_first_dump("[CMDQ]"string, ##args); \
 	}
 
 #define CMDQ_MSG(string, args...) \
-    if (cmdq_core_should_print_msg()) \
+    if (0) \
     { \
 	pr_warn("[CMDQ]"string, ##args); \
     }
 
 #define CMDQ_VERBOSE(string, args...) \
-    if (cmdq_core_should_print_msg()) \
+    if (0) \
     { \
 	pr_info("[CMDQ]"string, ##args); \
     }

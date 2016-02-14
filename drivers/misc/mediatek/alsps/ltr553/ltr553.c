@@ -125,7 +125,7 @@ extern void mt65xx_eint_registration(unsigned int eint_num, unsigned int is_deb_
 #define LTR553_DEV_NAME     "LTR553"
 /*----------------------------------------------------------------------------*/
 #define APS_TAG "[ALS/PS] "
-#define APS_DEBUG
+// #define APS_DEBUG
 #if defined(APS_DEBUG)
 #define APS_FUN(f)      printk(KERN_INFO APS_TAG"%s\n", __FUNCTION__)
 #define APS_ERR(fmt, args...)   printk(KERN_ERR APS_TAG"%s %d : "fmt, __FUNCTION__, __LINE__, ##args)

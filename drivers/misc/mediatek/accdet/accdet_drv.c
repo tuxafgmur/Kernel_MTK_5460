@@ -8,7 +8,7 @@
 static struct platform_driver accdet_driver;
 
 static int debug_enable_drv = 1;
-#define ACCDET_DEBUG_DRV(format, args...) do { \
+#define ACCDET_DEBUG_DRV(format, args...) if (0 > 1) do { \
 	if (debug_enable_drv) \
 	{\
 		printk(KERN_DEBUG format, ##args);\
@@ -120,6 +120,7 @@ static int accdet_mod_init(void)
 
 #if defined(CONFIG_OF)
     ret = platform_device_register(&accdet_device);
+#if 0
     printk("[%s]: accdet_device, retval=%d \n!", __func__, ret);
 
 	if (ret != 0)
@@ -131,6 +132,7 @@ static int accdet_mod_init(void)
 	{
 		printk("platform_device_accdet_register done!\n");
 	}
+#endif
 #endif	
 
 	/* ------------------------------------------------------------------ */

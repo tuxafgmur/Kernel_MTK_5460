@@ -52,19 +52,19 @@ static int ts3a225e_i2c_probe(struct i2c_client *client, const struct i2c_device
 {
 	kal_uint8 devicve_id[1];
 	
-	printk("ts3a225e_i2c_probe \n");
+	//printk("ts3a225e_i2c_probe \n");
 
 	ts3a225e_i2c_client = client;
 
 	ts3a225e_read_byte(0x01, &devicve_id[0]);
-	printk("ts3a225e_i2c_probe ID=%x \n", devicve_id[0]);
+	//printk("ts3a225e_i2c_probe ID=%x \n", devicve_id[0]);
 
 	return 0;
 }
 
 static int ts3a225e_i2c_remove(struct i2c_client *client)
 {
-	printk("TS3A225E_i2c_remove \n");
+	//printk("TS3A225E_i2c_remove \n");
 	
 	ts3a225e_i2c_client = NULL;
 
@@ -73,14 +73,14 @@ static int ts3a225e_i2c_remove(struct i2c_client *client)
 
 static int ts3a225e_i2c_suspend(struct i2c_client *client, pm_message_t msg)
 {
-	printk("TS3A225E_i2c_suspend \n");
+	//printk("TS3A225E_i2c_suspend \n");
 	
 	return 0;
 }
 
 static int ts3a225e_i2c_resume(struct i2c_client *client)
 {
-	printk("TS3A225E_i2c_resume \n");
+	//printk("TS3A225E_i2c_resume \n");
 
 	return 0;
 }
@@ -162,11 +162,11 @@ int ts3a225e_write_byte(kal_uint8 cmd, kal_uint8 writeData)
 /*----------------------------------------------------------------------------*/
 static int ts3a225e_probe(struct platform_device *pdev)
 {
-	printk("ts3a225e_probe \n");
+	//printk("ts3a225e_probe \n");
 
 	if(i2c_add_driver(&ts3a225e_i2c_driver))
 	{
-		printk("ts3a225e add driver error\n");
+		//printk("ts3a225e add driver error\n");
 		return -1;
 	}
 
@@ -175,7 +175,7 @@ static int ts3a225e_probe(struct platform_device *pdev)
 /*----------------------------------------------------------------------------*/
 static int ts3a225e_remove(struct platform_device *pdev)
 {
-	printk("ts3a225e remove \n");
+	//printk("ts3a225e remove \n");
 
 	i2c_del_driver(&ts3a225e_i2c_driver);
 
@@ -205,13 +205,13 @@ static struct platform_driver ts3a225e_audio_switch_driver =
 /*----------------------------------------------------------------------------*/
 static int __init ts3a225e_init(void)
 {
-	printk("ts3a225e_init \n");
+	//printk("ts3a225e_init \n");
 	
 	i2c_register_board_info(3, &i2c_TS3A225E, 1);
 
 	if(platform_driver_register(&ts3a225e_audio_switch_driver))
 	{
-		printk("ts3a225e failed to register driver");
+		//printk("ts3a225e failed to register driver");
 		return -ENODEV;
 	}
 	
@@ -220,7 +220,7 @@ static int __init ts3a225e_init(void)
 /*----------------------------------------------------------------------------*/
 static void __exit ts3a225e_exit(void)
 {
-	printk("ts3a225e_exit \n");
+	//printk("ts3a225e_exit \n");
 }
 /*----------------------------------------------------------------------------*/
 module_init(ts3a225e_init);

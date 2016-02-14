@@ -34,7 +34,7 @@ int accdet_irq;
 unsigned int gpiopin,headsetdebounce;
 struct headset_mode_settings *cust_headset_settings = NULL;
 extern u32 pmic_Read_Efuse_HPOffset(int i);
-#define ACCDET_DEBUG(format, args...) do{ \
+#define ACCDET_DEBUG(format, args...) if (0 > 1) do{ \
 	if(debug_enable) \
 	{\
 		printk(KERN_WARNING format,##args);\
@@ -1856,7 +1856,7 @@ void mt_accdet_suspend(void)  // only one suspend mode
        accdet_disable_clk(); 
     }
 #endif 
-	printk(KERN_DEBUG "[Accdet]accdet_suspend: ACCDET_CTRL=[0x%x], STATE=[0x%x]->[0x%x]\n", pmic_pwrap_read(ACCDET_CTRL), pre_state_swctrl, pmic_pwrap_read(ACCDET_STATE_SWCTRL));
+	//printk(KERN_DEBUG "[Accdet]accdet_suspend: ACCDET_CTRL=[0x%x], STATE=[0x%x]->[0x%x]\n", pmic_pwrap_read(ACCDET_CTRL), pre_state_swctrl, pmic_pwrap_read(ACCDET_STATE_SWCTRL));
 #endif
 }
 
@@ -1875,7 +1875,7 @@ void mt_accdet_resume(void) // wake up
        accdet_enable_hal(pre_state_swctrl);
 	}
 #endif
-	printk(KERN_DEBUG "[Accdet]accdet_resume: ACCDET_CTRL=[0x%x], STATE_SWCTRL=[0x%x]\n", pmic_pwrap_read(ACCDET_CTRL), pmic_pwrap_read(ACCDET_STATE_SWCTRL));
+	//printk(KERN_DEBUG "[Accdet]accdet_resume: ACCDET_CTRL=[0x%x], STATE_SWCTRL=[0x%x]\n", pmic_pwrap_read(ACCDET_CTRL), pmic_pwrap_read(ACCDET_STATE_SWCTRL));
 
 #endif
 
@@ -1900,18 +1900,18 @@ static void mt_accdet_pm_disable(unsigned long a)
    		#ifdef ACCDET_EINT_IRQ
    		pmic_pwrap_write(ACCDET_CTRL, pmic_pwrap_read(ACCDET_CTRL)&(~(ACCDET_ENABLE)));
    		#endif
-		printk("[Accdet]daccdet_pm_disable: disable!\n");
+		//printk("[Accdet]daccdet_pm_disable: disable!\n");
 	}
 	else
 	{
-		printk("[Accdet]daccdet_pm_disable: enable!\n");
+		//printk("[Accdet]daccdet_pm_disable: enable!\n");
 	}
 }
 #endif
 void mt_accdet_pm_restore_noirq(void)
 {
 	int current_status_restore = 0;
-    printk("[Accdet]accdet_pm_restore_noirq start!\n");
+    //printk("[Accdet]accdet_pm_restore_noirq start!\n");
 	// enable ACCDET unit
     ACCDET_DEBUG("accdet: enable_accdet\n");
     //enable clock
@@ -1948,7 +1948,7 @@ void mt_accdet_pm_restore_noirq(void)
 			accdet_status = PLUG_OUT;
 			break;
 		default:
-			printk("[Accdet]accdet_pm_restore_noirq: accdet current status error!\n");
+			//printk("[Accdet]accdet_pm_restore_noirq: accdet current status error!\n");
 			break;
 	}
 	switch_set_state((struct switch_dev *)&accdet_data, cable_type);
@@ -1959,7 +1959,7 @@ void mt_accdet_pm_restore_noirq(void)
 		accdet_disable_ipoh_timer.function = &mt_accdet_pm_disable;
 		accdet_disable_ipoh_timer.data = ((unsigned long) 0 );
 		add_timer(&accdet_disable_ipoh_timer);
-		printk("[Accdet]enable! pm timer\n");	
+		//printk("[Accdet]enable! pm timer\n");	
 
     #else
 		//disable accdet

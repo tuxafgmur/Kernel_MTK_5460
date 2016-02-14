@@ -72,14 +72,14 @@ do { \
 		__func__, ## arg); \
 } while (0)
 
-#define BTIF_INFO_FUNC(fmt, arg ...) \
+#define BTIF_INFO_FUNC(fmt, arg ...) if (0 > 1) \
 do { \
 	if (mtk_btif_hal_get_log_lvl() >= BTIF_LOG_INFO)\
 		hal_log_print(DFT_TAG "[I]%s:"  fmt, \
 		__func__, ## arg); \
 } while (0)
 
-#define BTIF_WARN_FUNC(fmt, arg ...) \
+#define BTIF_WARN_FUNC(fmt, arg ...) if (0 > 1) \
 do { \
 	if (mtk_btif_hal_get_log_lvl() >= BTIF_LOG_WARN)\
 		hal_log_print(DFT_TAG "[W]%s:"  fmt, \
@@ -93,14 +93,14 @@ do {\
 		__func__, __LINE__, ## arg);\
 } while (0)
 
-#define BTIF_DBG_FUNC(fmt, arg ...) \
+#define BTIF_DBG_FUNC(fmt, arg ...) if (0 > 1) \
 do { \
 	if (mtk_btif_hal_get_log_lvl() >= BTIF_LOG_DBG) \
 		hal_log_print(DFT_TAG "[D]%s:"  fmt, \
 		__func__, ## arg); \
 } while (0)
 
-#define BTIF_TRC_FUNC(f) \
+#define BTIF_TRC_FUNC(f) if (0 > 1) \
 do { \
 	if (mtk_btif_hal_get_log_lvl() >= BTIF_LOG_DBG) \
 		hal_log_print(DFT_TAG "<%s> <%d>\n", \

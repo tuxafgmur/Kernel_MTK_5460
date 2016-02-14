@@ -17,7 +17,7 @@ static void mrdump_dump_backtrace(struct pt_regs *regs)
 	frame.fp = regs->regs[29];
 	frame.sp = regs->sp;
 	frame.pc = regs->pc;
-	printk("Call trace:\n");
+	//printk("Call trace:\n");
 	while (count++ < 32) {
 		unsigned long where = frame.pc;
 		int ret;

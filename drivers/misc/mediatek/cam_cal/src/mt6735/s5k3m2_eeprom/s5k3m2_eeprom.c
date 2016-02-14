@@ -27,7 +27,7 @@
 
 
 //#define CAM_CALGETDLT_DEBUG
-#define CAM_CAL_DEBUG
+//#define CAM_CAL_DEBUG
 #ifdef CAM_CAL_DEBUG
 
 #define CAM_CALINF(fmt, arg...)    printk("[%s] " fmt, __FUNCTION__, ##arg)

@@ -67,9 +67,9 @@ static void init_chip_id(unsigned int line)
         }
     }
 #endif
-    pr_alert("0x%04X 0x%04X 0x%04X 0x%04X (%04d)\n", 
-        readl(IOMEM(APHW_CODE)),readl(IOMEM(APHW_VER)),
-        readl(IOMEM(APSW_VER)),readl(IOMEM(APHW_SUBCODE)), line);
+    //pr_alert("0x%04X 0x%04X 0x%04X 0x%04X (%04d)\n", 
+    //    readl(IOMEM(APHW_CODE)),readl(IOMEM(APHW_VER)),
+    //    readl(IOMEM(APSW_VER)),readl(IOMEM(APHW_SUBCODE)), line);
 }
 
 /* return hardware version */
@@ -178,13 +178,13 @@ unsigned int mt_get_chip_info(chip_info_t id)
 int __init chip_mod_init(void)
 {
     struct mt_chip_drv* p_drv = get_mt_chip_drv();
-        
+#if 0        
     pr_alert("CODE = %04x %04x %04x %04x, %04x %04x %04x %04x, %04X %04X\n", 
              __chip_hw_code(), __chip_hw_subcode(), __chip_hw_ver(), 
              __chip_sw_ver(), __chip_func_code(), __chip_proj_code(), 
              __chip_date_code(), __chip_fab_code(), 
              mt_get_chip_hw_ver(), mt_get_chip_sw_ver());
-
+#endif
     p_drv->info_bit_mask |= CHIP_INFO_BIT(CHIP_INFO_HW_CODE) | 
                            CHIP_INFO_BIT(CHIP_INFO_HW_SUBCODE) | 
                            CHIP_INFO_BIT(CHIP_INFO_HW_VER) | 
@@ -193,7 +193,7 @@ int __init chip_mod_init(void)
 
     p_drv->get_chip_info = mt_get_chip_info;
 
-    pr_alert("CODE = %08X %p", p_drv->info_bit_mask, p_drv->get_chip_info);
+    //pr_alert("CODE = %08X %p", p_drv->info_bit_mask, p_drv->get_chip_info);
     
     return 0;
 }

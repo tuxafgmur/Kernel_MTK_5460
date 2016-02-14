@@ -126,7 +126,7 @@ static void __init create_procfs(void)
         pr_err("create /proc/chip fails\n");
         return;
     } else {            
-        pr_alert("create /proc/chip(%x)\n", g_chip_drv.info_bit_mask);
+        //pr_alert("create /proc/chip(%x)\n", g_chip_drv.info_bit_mask);
     }
     
     for (idx = 0; idx < sizeof(chip_ent)/sizeof(chip_ent[0]); idx++) {

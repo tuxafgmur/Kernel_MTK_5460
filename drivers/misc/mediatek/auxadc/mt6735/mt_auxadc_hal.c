@@ -306,14 +306,14 @@ void mt_auxadc_hal_init(void)
 	auxadc_base = of_iomap(node, 0);
     if (!auxadc_base) 
         printk("[AUXADC] base failed\n");
-    printk("[AUXADC]: auxadc:0x%p\n", auxadc_base);
+    //printk("[AUXADC]: auxadc:0x%p\n", auxadc_base);
 
 
     node = of_find_compatible_node(NULL, NULL, "mediatek,APMIXED");
     if(node){
 		/* Setup IO addresses */
 		auxadc_apmix_base = of_iomap(node, 0);
-		printk("[AUXADC] auxadc auxadc_apmix_base=0x%p\n",auxadc_apmix_base);
+		//printk("[AUXADC] auxadc auxadc_apmix_base=0x%p\n",auxadc_apmix_base);
     }
     else{
         printk("[AUXADC] auxadc_apmix_base error\n");
@@ -327,7 +327,7 @@ void mt_auxadc_hal_init(void)
 
 void mt_auxadc_hal_suspend(void)
 {	
-    printk("******** MT auxadc driver suspend!! ********\n" );
+    //printk("******** MT auxadc driver suspend!! ********\n" );
 #ifndef CONFIG_MTK_FPGA	
     if(disable_clock(MT_PDN_PERI_AUXADC,"AUXADC"))
     	printk("hwEnableClock AUXADC failed.");
@@ -336,7 +336,7 @@ void mt_auxadc_hal_suspend(void)
 
 void mt_auxadc_hal_resume(void)
 {
-    	printk("******** MT auxadc driver resume!! ********\n" );
+    	//printk("******** MT auxadc driver resume!! ********\n" );
 #ifndef CONFIG_MTK_FPGA
 	if(enable_clock(MT_PDN_PERI_AUXADC,"AUXADC"))
 	    printk("hwEnableClock AUXADC failed!!!.");
@@ -346,9 +346,9 @@ void mt_auxadc_hal_resume(void)
 
 int mt_auxadc_dump_register(char *buf)
 {
-	printk("[auxadc]: AUXADC_CON0=%x\n",AUXADC_DRV_ReadReg16((volatile u16 *)AUXADC_CON0));
-	printk("[auxadc]: AUXADC_CON1=%x\n",AUXADC_DRV_ReadReg16((volatile u16 *)AUXADC_CON1));
-	printk("[auxadc]: AUXADC_CON2=%x\n",AUXADC_DRV_ReadReg16((volatile u16 *)AUXADC_CON2));
+// 	printk("[auxadc]: AUXADC_CON0=%x\n",AUXADC_DRV_ReadReg16((volatile u16 *)AUXADC_CON0));
+// 	printk("[auxadc]: AUXADC_CON1=%x\n",AUXADC_DRV_ReadReg16((volatile u16 *)AUXADC_CON1));
+// 	printk("[auxadc]: AUXADC_CON2=%x\n",AUXADC_DRV_ReadReg16((volatile u16 *)AUXADC_CON2));
 
 	return sprintf(buf, "AUXADC_CON0:%x\n AUXADC_CON1:%x\n AUXADC_CON2:%x\n",
 		AUXADC_DRV_ReadReg16((volatile u16 *)AUXADC_CON0),

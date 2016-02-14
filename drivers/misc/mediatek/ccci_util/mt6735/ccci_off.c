@@ -64,7 +64,7 @@ static void internal_md_power_down(void){
 	void __iomem *md_topsm_base, *modem_lite_topsm_base, *modem_topsm_base, 
 		*tdd_base, *ltelt1_base, *ltelt1_base_1, *ltelt1_base_2, *md_pll_mixedsys_base;
 	
-	printk("[ccci-off]shutdown MDSYS1 !!!\n");
+	//printk("[ccci-off]shutdown MDSYS1 !!!\n");
 	ret = md_power_on(SYS_MD1);
 	printk("[ccci-off]0.power on MD_INFRA/MODEM_TOP ret=%d\n", ret);
 	if(ret)
@@ -329,7 +329,7 @@ static int __init modem_off_init(void)
 		printk("[ccci-off]power off MD in ccci disabled\n");
 		internal_md_power_down();
 	}else{
-		printk("[ccci-off]md1 effused,no need power off\n");
+		//printk("[ccci-off]md1 effused,no need power off\n");
 	}
 #else
 #ifdef MTK_KERNEL_POWER_OFF_CHARGING
@@ -338,7 +338,7 @@ static int __init modem_off_init(void)
 			printk("[ccci-off]power off MD in charging mode %d\n", g_boot_mode);
 			internal_md_power_down();
 		}else{
-			printk("[ccci-off]md1 effused,no need power off in charging mode %d\n",g_boot_mode);
+			//printk("[ccci-off]md1 effused,no need power off in charging mode %d\n",g_boot_mode);
 		}
 	}
 #endif

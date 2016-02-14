@@ -48,21 +48,21 @@ extern int __conn_md_log_print(const char *str, ...);
 #define DFT_TAG         "[CONN-MD-DFT]"
 #endif
 
-#define CONN_MD_LOUD_FUNC(fmt, arg ...) \
+#define CONN_MD_LOUD_FUNC(fmt, arg ...) if (0) \
 do { \
 	if (__conn_md_get_log_lvl() >= CONN_MD_LOG_LOUD) \
 		__conn_md_log_print(DFT_TAG "[L]%s:"  fmt, \
 		__func__, ## arg); \
 } while (0)
 
-#define CONN_MD_INFO_FUNC(fmt, arg ...) \
+#define CONN_MD_INFO_FUNC(fmt, arg ...) if (0) \
 do { \
 	if (__conn_md_get_log_lvl() >= CONN_MD_LOG_INFO)\
 		__conn_md_log_print(DFT_TAG "[I]%s:"  fmt, \
 		__func__, ## arg); \
 } while (0)
 
-#define CONN_MD_WARN_FUNC(fmt, arg ...) \
+#define CONN_MD_WARN_FUNC(fmt, arg ...) if (0) \
 do { \
 	if (__conn_md_get_log_lvl() >= CONN_MD_LOG_WARN)\
 		__conn_md_log_print(DFT_TAG "[W]%s:"  fmt, \
@@ -76,14 +76,14 @@ do {\
 		__func__, __LINE__, ## arg);\
 } while (0)
 
-#define CONN_MD_DBG_FUNC(fmt, arg ...) \
+#define CONN_MD_DBG_FUNC(fmt, arg ...) if (0) \
 do { \
 	if (__conn_md_get_log_lvl() >= CONN_MD_LOG_DBG) \
 		__conn_md_log_print(DFT_TAG "[D]%s:"  fmt, \
 		__func__, ## arg); \
 } while (0)
 
-#define CONN_MD_TRC_FUNC(f) \
+#define CONN_MD_TRC_FUNC(f) if (0) \
 do { \
 	if (__conn_md_get_log_lvl() >= CONN_MD_LOG_DBG) \
 		__conn_md_log_print(DFT_TAG "<%s> <%d>\n", \

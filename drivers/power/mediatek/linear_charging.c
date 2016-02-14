@@ -125,14 +125,14 @@ extern int g_platform_boot_mode;
 void BATTERY_SetUSBState(int usb_state_value)
 {
 #if defined(CONFIG_POWER_EXT)
-	battery_log(BAT_LOG_CRTI, "[BATTERY_SetUSBState] in FPGA/EVB, no service\r\n");
+	battery_log(BAT_LOG_CRTI, "[BATTERY_SetUSBState] in FPGA/EVB, no service\n");
 #else
 	if ((usb_state_value < USB_SUSPEND) || ((usb_state_value > USB_CONFIGURED))) {
 		battery_log(BAT_LOG_CRTI,
-				    "[BATTERY] BAT_SetUSBState Fail! Restore to default value\r\n");
+				    "[BATTERY] BAT_SetUSBState Fail! Restore to default value\n");
 		usb_state_value = USB_UNCONFIGURED;
 	} else {
-		battery_log(BAT_LOG_CRTI, "[BATTERY] BAT_SetUSBState Success! Set %d\r\n",
+		battery_log(BAT_LOG_CRTI, "[BATTERY] BAT_SetUSBState Success! Set %d\n",
 				    usb_state_value);
 		g_usb_state = usb_state_value;
 	}
@@ -563,7 +563,7 @@ PMU_STATUS do_jeita_state_machine(void)
 	/* JEITA battery temp Standard */
 	if (BMT_status.temperature >= TEMP_POS_60_THRESHOLD) {
 		battery_log(BAT_LOG_CRTI,
-				    "[BATTERY] Battery Over high Temperature(%d) !!\n\r",
+				    "[BATTERY] Battery Over high Temperature(%d) !!\n",
 				    TEMP_POS_60_THRESHOLD);
 		g_temp_status = TEMP_ABOVE_POS_60;
 		return PMU_STATUS_FAIL;
@@ -571,13 +571,13 @@ PMU_STATUS do_jeita_state_machine(void)
 		if ((g_temp_status == TEMP_ABOVE_POS_60)
 		    && (BMT_status.temperature >= TEMP_POS_60_THRES_MINUS_X_DEGREE)) {
 			battery_log(BAT_LOG_CRTI,
-					    "[BATTERY] Battery Temperature between %d and %d,not allow charging yet!!\n\r",
+					    "[BATTERY] Battery Temperature between %d and %d,not allow charging yet!!\n",
 					    TEMP_POS_60_THRES_MINUS_X_DEGREE,
 					    TEMP_POS_60_THRESHOLD);
 			return PMU_STATUS_FAIL;
 		} else {
 			battery_log(BAT_LOG_CRTI,
-					    "[BATTERY] Battery Temperature between %d and %d !!\n\r",
+					    "[BATTERY] Battery Temperature between %d and %d !!\n",
 					    TEMP_POS_45_THRESHOLD, TEMP_POS_60_THRESHOLD);
 			g_temp_status = TEMP_POS_45_TO_POS_60;
 			g_jeita_recharging_voltage = JEITA_TEMP_POS_45_TO_POS_60_RECHARGE_VOLTAGE;
@@ -590,11 +590,11 @@ PMU_STATUS do_jeita_state_machine(void)
 		    || ((g_temp_status == TEMP_POS_0_TO_POS_10)
 			&& (BMT_status.temperature <= TEMP_POS_10_THRES_PLUS_X_DEGREE))) {
 			battery_log(BAT_LOG_CRTI,
-					    "[BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\n\r");
+					    "[BATTERY] Battery Temperature not recovery to normal temperature charging mode yet!!\n");
 		} else {
-			battery_log(BAT_LOG_CRTI,
-					    "[BATTERY] Battery Normal Temperature between %d and %d !!\n\r",
-					    TEMP_POS_10_THRESHOLD, TEMP_POS_45_THRESHOLD);
+// 			battery_log(BAT_LOG_CRTI,
+// 					    "[BATTERY] Battery Normal Temperature between %d and %d !!\n",
+// 					    TEMP_POS_10_THRESHOLD, TEMP_POS_45_THRESHOLD);
 
 			g_temp_status = TEMP_POS_10_TO_POS_45;
 #ifdef HIGH_BATTERY_VOLTAGE_SUPPORT
@@ -610,20 +610,20 @@ PMU_STATUS do_jeita_state_machine(void)
 		    && (BMT_status.temperature <= TEMP_POS_0_THRES_PLUS_X_DEGREE)) {
 			if (g_temp_status == TEMP_NEG_10_TO_POS_0) {
 				battery_log(BAT_LOG_CRTI,
-						    "[BATTERY] Battery Temperature between %d and %d !!\n\r",
+						    "[BATTERY] Battery Temperature between %d and %d !!\n",
 						    TEMP_POS_0_THRES_PLUS_X_DEGREE,
 						    TEMP_POS_10_THRESHOLD);
 			}
 			if (g_temp_status == TEMP_BELOW_NEG_10) {
 				battery_log(BAT_LOG_CRTI,
-						    "[BATTERY] Battery Temperature between %d and %d,not allow charging yet!!\n\r",
+						    "[BATTERY] Battery Temperature between %d and %d,not allow charging yet!!\n",
 						    TEMP_POS_0_THRESHOLD,
 						    TEMP_POS_0_THRES_PLUS_X_DEGREE);
 				return PMU_STATUS_FAIL;
 			}
 		} else {
 			battery_log(BAT_LOG_CRTI,
-					    "[BATTERY] Battery Temperature between %d and %d !!\n\r",
+					    "[BATTERY] Battery Temperature between %d and %d !!\n",
 					    TEMP_POS_0_THRESHOLD, TEMP_POS_10_THRESHOLD);
 			g_temp_status = TEMP_POS_0_TO_POS_10;
 			g_jeita_recharging_voltage = JEITA_TEMP_POS_0_TO_POS_10_RECHARGE_VOLTAGE;
@@ -634,12 +634,12 @@ PMU_STATUS do_jeita_state_machine(void)
 		if ((g_temp_status == TEMP_BELOW_NEG_10)
 		    && (BMT_status.temperature <= TEMP_NEG_10_THRES_PLUS_X_DEGREE)) {
 			battery_log(BAT_LOG_CRTI,
-					    "[BATTERY] Battery Temperature between %d and %d,not allow charging yet!!\n\r",
+					    "[BATTERY] Battery Temperature between %d and %d,not allow charging yet!!\n",
 					    TEMP_NEG_10_THRESHOLD, TEMP_NEG_10_THRES_PLUS_X_DEGREE);
 			return PMU_STATUS_FAIL;
 		} else {
 			battery_log(BAT_LOG_CRTI,
-					    "[BATTERY] Battery Temperature between %d and %d !!\n\r",
+					    "[BATTERY] Battery Temperature between %d and %d !!\n",
 					    TEMP_NEG_10_THRESHOLD, TEMP_POS_0_THRESHOLD);
 			g_temp_status = TEMP_NEG_10_TO_POS_0;
 			g_jeita_recharging_voltage = JEITA_TEMP_NEG_10_TO_POS_0_RECHARGE_VOLTAGE;
@@ -648,7 +648,7 @@ PMU_STATUS do_jeita_state_machine(void)
 		}
 	} else {
 		battery_log(BAT_LOG_CRTI,
-				    "[BATTERY] Battery below low Temperature(%d) !!\n\r",
+				    "[BATTERY] Battery below low Temperature(%d) !!\n",
 				    TEMP_NEG_10_THRESHOLD);
 		g_temp_status = TEMP_BELOW_NEG_10;
 		return PMU_STATUS_FAIL;
@@ -673,7 +673,7 @@ static void set_jeita_charging_current(void)
 	#if 0
 	if (g_temp_status == TEMP_NEG_10_TO_POS_0) {
 		g_temp_CC_value = CHARGE_CURRENT_200_00_MA;	/* for low temp */
-		battery_log(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\r\n",
+		battery_log(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\n",
 				    g_temp_CC_value);
 	}
 	#else
@@ -692,7 +692,7 @@ static void set_jeita_charging_current(void)
 		    g_temp_CC_value = JEITA_TEMP_POS_45_TO_POS_60_CC_CURRENT;
         #endif
         
-        battery_xlog_printk(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\r\n", g_temp_CC_value);
+        //battery_xlog_printk(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\n", g_temp_CC_value);
     }
 	else if(g_temp_status == TEMP_POS_10_TO_POS_45){
         
@@ -709,12 +709,12 @@ static void set_jeita_charging_current(void)
 		    g_temp_CC_value = JEITA_TEMP_POS_10_TO_POS_45_CC_CURRENT;
 		#endif
 		
-        battery_xlog_printk(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\r\n", g_temp_CC_value);		
+        //battery_xlog_printk(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\n", g_temp_CC_value);		
 	}
 	else if(g_temp_status == TEMP_POS_0_TO_POS_10)
     {
         g_temp_CC_value = JEITA_TEMP_POS_0_TO_POS_10_CC_CURRENT;
-        battery_xlog_printk(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\r\n", g_temp_CC_value);		
+        //battery_xlog_printk(BAT_LOG_CRTI, "[BATTERY] JEITA set charging current : %d\n", g_temp_CC_value);		
 	}	
 	else
 	{
@@ -746,7 +746,7 @@ void select_charging_curret_bcct(void)
 
 kal_uint32 set_bat_charging_current_limit(int current_limit)
 {
-	battery_log(BAT_LOG_CRTI, "[BATTERY] set_bat_charging_current_limit (%d)\r\n",
+	battery_log(BAT_LOG_CRTI, "[BATTERY] set_bat_charging_current_limit (%d)\n",
 			    current_limit);
 
 	if (current_limit != -1) {
@@ -802,7 +802,7 @@ kal_uint32 set_bat_charging_current_limit(int current_limit)
 
 void set_bat_sw_cv_charging_current_limit(int current_limit)
 {
-    battery_log(BAT_LOG_CRTI, "[BATTERY] set_bat_sw_cv_charging_current_limit (%d)\r\n", current_limit);
+    battery_log(BAT_LOG_CRTI, "[BATTERY] set_bat_sw_cv_charging_current_limit (%d)\n", current_limit);
 
     if(current_limit <= CHARGE_CURRENT_70_00_MA)         ulc_cv_charging_current=CHARGE_CURRENT_0_00_MA;
     else if(current_limit <= CHARGE_CURRENT_200_00_MA)   ulc_cv_charging_current=CHARGE_CURRENT_70_00_MA;
@@ -827,7 +827,7 @@ void set_bat_sw_cv_charging_current_limit(int current_limit)
 void select_charging_curret(void)
 {
 	if (g_ftm_battery_flag) {
-		battery_log(BAT_LOG_CRTI, "[BATTERY] FTM charging : %d\r\n",
+		battery_log(BAT_LOG_CRTI, "[BATTERY] FTM charging : %d\n",
 				    charging_level_data[0]);
 		g_temp_CC_value = charging_level_data[0];
 	} else {
@@ -845,7 +845,7 @@ void select_charging_curret(void)
 				}
 
 				battery_log(BAT_LOG_CRTI,
-						    "[BATTERY] STANDARD_HOST CC mode charging : %d on %d state\r\n",
+						    "[BATTERY] STANDARD_HOST CC mode charging : %d on %d state\n",
 						    g_temp_CC_value, g_usb_state);
 			}
 #else
@@ -876,7 +876,7 @@ void select_charging_curret(void)
 			}
 			
 			battery_log(BAT_LOG_CRTI,
-						"[BATTERY] CHARGING_HOST CC mode charging : %d on %d state\r\n",
+						"[BATTERY] CHARGING_HOST CC mode charging : %d on %d state\n",
 						g_temp_CC_value, g_usb_state);
 #else	
 			g_temp_CC_value = CHARGING_HOST_CHARGER_CURRENT;
@@ -898,8 +898,8 @@ void select_charging_curret(void)
 			g_temp_CC_value = CHARGE_CURRENT_70_00_MA;
 		}
 
-		battery_log(BAT_LOG_CRTI, "[BATTERY] Default CC mode charging : %d\r\n",
-				    g_temp_CC_value);
+// 		battery_log(BAT_LOG_CRTI, "[BATTERY] Default CC mode charging : %d\n",
+// 				    g_temp_CC_value);
 
 #if defined(CONFIG_MTK_JEITA_STANDARD_SUPPORT)
 		set_jeita_charging_current();
@@ -972,7 +972,7 @@ static void charging_current_calibration(void)
 
 	bat_isense_offset = bat_vol - Vsense;
 
-	battery_log(BAT_LOG_CRTI, "[BATTERY] bat_vol=%d, Vsense=%d, offset=%d \r\n",
+	battery_log(BAT_LOG_CRTI, "[BATTERY] bat_vol=%d, Vsense=%d, offset=%d \n",
 			    bat_vol, Vsense, bat_isense_offset);
 #else
 	bat_isense_offset = 0;
@@ -1024,7 +1024,7 @@ static void pchr_turn_on_charging(void)
 
 	kal_uint32 charging_enable = KAL_TRUE;
 
-	battery_log(BAT_LOG_FULL, "[BATTERY] pchr_turn_on_charging()!\r\n");
+	//battery_log(BAT_LOG_FULL, "[BATTERY] pchr_turn_on_charging()!\n");
 
 	if (BMT_status.bat_charging_state == CHR_ERROR) {
 		battery_log(BAT_LOG_CRTI, "[BATTERY] Charger Error, turn OFF charging !\n");
@@ -1061,28 +1061,28 @@ static void pchr_turn_on_charging(void)
 		if (g_temp_CC_value == CHARGE_CURRENT_0_00_MA) {
 			charging_enable = KAL_FALSE;
 			battery_log(BAT_LOG_CRTI,
-					"[BATTERY] charging current is set 0mA, turn off charging !\r\n");
+					"[BATTERY] charging current is set 0mA, turn off charging !\n");
 		} else {
 		
 #if defined(CONFIG_TINNO_QUICK_CHARGING) 
-		battery_xlog_printk(BAT_LOG_CRTI, "maxPgFlag=%d\r\n",maxPgFlag);
+		//battery_xlog_printk(BAT_LOG_CRTI, "maxPgFlag=%d\n",maxPgFlag);
 		if(1 == maxPgFlag) //over pg set 700ma
 		{
 	#if defined(CONFIG_MTK_JEITA_STANDARD_SUPPORT)
 			if(g_temp_status == TEMP_POS_45_TO_POS_60)
 			{
 				g_temp_CC_value = AC_CHARGER_CURRENT;
-				battery_xlog_printk(BAT_LOG_CRTI, "maxPG [BATTERY] JEITA set charging current : %d\r\n", g_temp_CC_value);
+				//battery_xlog_printk(BAT_LOG_CRTI, "maxPG [BATTERY] JEITA set charging current : %d\n", g_temp_CC_value);
 			}
 			else if(g_temp_status == TEMP_POS_10_TO_POS_45)
 			{ 
 				g_temp_CC_value = AC_CHARGER_CURRENT;
-				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_10_TO_POS_45 JEITA set charging current : %d\r\n", g_temp_CC_value);		
+				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_10_TO_POS_45 JEITA set charging current : %d\n", g_temp_CC_value);		
 			}
 			else if(g_temp_status == TEMP_POS_0_TO_POS_10)
 			{
 				g_temp_CC_value = JEITA_TEMP_POS_0_TO_POS_10_CC_CURRENT;
-				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_0_TO_POS_10 JEITA set charging current : %d\r\n", g_temp_CC_value);		
+				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_0_TO_POS_10 JEITA set charging current : %d\n", g_temp_CC_value);		
 			}	
 			else
 			{
@@ -1099,17 +1099,17 @@ static void pchr_turn_on_charging(void)
 			if(g_temp_status == TEMP_POS_45_TO_POS_60)
 			{
 				g_temp_CC_value = USB_CHARGER_CURRENT;
-				battery_xlog_printk(BAT_LOG_CRTI, "maxPG [BATTERY] JEITA set charging current : %d\r\n", g_temp_CC_value);
+				//battery_xlog_printk(BAT_LOG_CRTI, "maxPG [BATTERY] JEITA set charging current : %d\n", g_temp_CC_value);
 			}
 			else if(g_temp_status == TEMP_POS_10_TO_POS_45)
 			{	
 				g_temp_CC_value = USB_CHARGER_CURRENT;
-				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_10_TO_POS_45 JEITA set charging current : %d\r\n", g_temp_CC_value);		
+				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_10_TO_POS_45 JEITA set charging current : %d\n", g_temp_CC_value);		
 			}
 			else if(g_temp_status == TEMP_POS_0_TO_POS_10)
 			{	
 				g_temp_CC_value = JEITA_TEMP_POS_0_TO_POS_10_CC_CURRENT;
-				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_0_TO_POS_10 JEITA set charging current : %d\r\n", g_temp_CC_value);		
+				battery_xlog_printk(BAT_LOG_CRTI, "maxPG TEMP_POS_0_TO_POS_10 JEITA set charging current : %d\n", g_temp_CC_value);		
 			}	
 			else
 			{
@@ -1156,8 +1156,8 @@ static void pchr_turn_on_charging(void)
 	}
 
 	/* enable/disable charging */
-	battery_log(BAT_LOG_CRTI, "[BATTERY] pchr_turn_on_charging(), enable =%d \r\n",
-			    charging_enable);
+	//battery_log(BAT_LOG_CRTI, "[BATTERY] pchr_turn_on_charging(), enable =%d \n",
+	//		    charging_enable);
 	battery_charging_control(CHARGING_CMD_ENABLE, &charging_enable);
 
 
@@ -1166,7 +1166,7 @@ static void pchr_turn_on_charging(void)
 
 PMU_STATUS BAT_PreChargeModeAction(void)
 {
-	battery_log(BAT_LOG_CRTI, "[BATTERY] Pre-CC mode charge, timer=%d on %d !!\n\r",
+	battery_log(BAT_LOG_CRTI, "[BATTERY] Pre-CC mode charge, timer=%d on %d !!\n",
 			    BMT_status.PRE_charging_time, BMT_status.total_charging_time);
 
 	BMT_status.PRE_charging_time += BAT_TASK_PERIOD;
@@ -1210,7 +1210,7 @@ PMU_STATUS BAT_PreChargeModeAction(void)
 
 PMU_STATUS BAT_ConstantCurrentModeAction(void)
 {
-	battery_log(BAT_LOG_CRTI, "[BATTERY] CC mode charge, timer=%d on %d !!\n\r",
+	battery_log(BAT_LOG_CRTI, "[BATTERY] CC mode charge, timer=%d on %d !!\n",
 			    BMT_status.CC_charging_time, BMT_status.total_charging_time);
 
 	BMT_status.PRE_charging_time = 0;
@@ -1258,7 +1258,7 @@ PMU_STATUS BAT_TopOffModeAction(void)
 	kal_uint32 cv_voltage = 4200;
 #endif
 
-	battery_log(BAT_LOG_CRTI, "[BATTERY] Top Off mode charge, timer=%d on %d !!\n\r",
+	battery_log(BAT_LOG_CRTI, "[BATTERY] Top Off mode charge, timer=%d on %d !!\n",
 			    BMT_status.TOPOFF_charging_time, BMT_status.total_charging_time);
 
 	BMT_status.PRE_charging_time = 0;
@@ -1290,7 +1290,7 @@ PMU_STATUS BAT_BatteryFullAction(void)
 {
 	kal_uint32 charging_enable = KAL_FALSE;
 
-	battery_log(BAT_LOG_CRTI, "[BATTERY] Battery full !!\n\r");
+	battery_log(BAT_LOG_CRTI, "[BATTERY] Battery full !!\n");
 
 	BMT_status.bat_full = KAL_TRUE;
 	BMT_status.total_charging_time = 0;
@@ -1308,7 +1308,7 @@ PMU_STATUS BAT_BatteryFullAction(void)
 #endif
 	{
 		battery_log(BAT_LOG_CRTI,
-				    "[BATTERY] Battery Enter Re-charging!! , vbat=(%d)\n\r",
+				    "[BATTERY] Battery Enter Re-charging!! , vbat=(%d)\n",
 				    BMT_status.bat_vol);
 
 		BMT_status.bat_in_recharging_state = KAL_TRUE;
@@ -1328,12 +1328,12 @@ PMU_STATUS BAT_BatteryHoldAction(void)
 {
 	kal_uint32 charging_enable;
 
-	battery_log(BAT_LOG_CRTI, "[BATTERY] Hold mode !!\n\r");
+	battery_log(BAT_LOG_CRTI, "[BATTERY] Hold mode !!\n");
 
 	if (BMT_status.bat_vol < TALKING_RECHARGE_VOLTAGE || g_call_state == CALL_IDLE) {
 		BMT_status.bat_charging_state = CHR_CC;
 		battery_log(BAT_LOG_CRTI,
-				    "[BATTERY] Exit Hold mode and Enter CC mode !!\n\r");
+				    "[BATTERY] Exit Hold mode and Enter CC mode !!\n");
 	}
 
 	/*  Disable charger */
@@ -1348,7 +1348,7 @@ PMU_STATUS BAT_BatteryStatusFailAction(void)
 {
 	kal_uint32 charging_enable;
 
-	battery_log(BAT_LOG_CRTI, "[BATTERY] BAD Battery status... Charging Stop !!\n\r");
+	battery_log(BAT_LOG_CRTI, "[BATTERY] BAD Battery status... Charging Stop !!\n");
 
 #if defined(CONFIG_MTK_JEITA_STANDARD_SUPPORT)
 	if ((g_temp_status == TEMP_ABOVE_POS_60) || (g_temp_status == TEMP_BELOW_NEG_10)) {

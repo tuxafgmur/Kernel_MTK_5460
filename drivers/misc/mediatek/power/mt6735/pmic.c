@@ -523,7 +523,7 @@ kal_uint32 upmu_get_rgs_chrdet(void)
 
 	//val = mt6325_upmu_get_rgs_chrdet();
 	val = pmic_get_register_value(PMIC_RGS_CHRDET);
-	PMICLOG("[upmu_get_rgs_chrdet] CHRDET status = %d\n", val);
+	//PMICLOG("[upmu_get_rgs_chrdet] CHRDET status = %d\n", val);
 
 	return val;
 }

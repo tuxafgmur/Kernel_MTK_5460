@@ -156,18 +156,22 @@ int get_hw_ocv(void)
 
 static void dump_nter(void)
 {
-    bm_print(BM_LOG_CRTI, "[dump_nter] mt6328_upmu_get_fg_nter_29_16 = 0x%x\r\n", 
+#if 0
+    bm_print(BM_LOG_CRTI, "[dump_nter] mt6328_upmu_get_fg_nter_29_16 = 0x%x\n", 
        pmic_get_register_value(PMIC_FG_NTER_29_16));
-    bm_print(BM_LOG_CRTI, "[dump_nter] mt6328_upmu_get_fg_nter_15_00 = 0x%x\r\n", 
+    bm_print(BM_LOG_CRTI, "[dump_nter] mt6328_upmu_get_fg_nter_15_00 = 0x%x\n", 
         pmic_get_register_value(PMIC_FG_NTER_15_00));
+#endif
 }
 
 static void dump_car(void)
 {
-    bm_print(BM_LOG_CRTI, "[dump_car] upmu_get_fg_car_31_16 = 0x%x\r\n", 
+#if 0
+    bm_print(BM_LOG_CRTI, "[dump_car] upmu_get_fg_car_31_16 = 0x%x\n", 
         pmic_get_register_value(PMIC_FG_CAR_31_16));
-    bm_print(BM_LOG_CRTI, "[dump_car] upmu_get_fg_car_15_00 = 0x%x\r\n", 
+    bm_print(BM_LOG_CRTI, "[dump_car] upmu_get_fg_car_15_00 = 0x%x\n", 
         pmic_get_register_value(PMIC_FG_CAR_15_00));
+#endif
 }
 
 static kal_uint32 fg_get_data_ready_status(void)
@@ -177,7 +181,7 @@ static kal_uint32 fg_get_data_ready_status(void)
     
     ret=pmic_read_interface(MT6328_FGADC_CON0, &temp_val, 0xFFFF, 0x0);
     
-    bm_print(BM_LOG_FULL, "[fg_get_data_ready_status] Reg[0x%x]=0x%x\r\n", MT6328_FGADC_CON0, temp_val);
+    bm_print(BM_LOG_FULL, "[fg_get_data_ready_status] Reg[0x%x]=0x%x\n", MT6328_FGADC_CON0, temp_val);
     
     temp_val = (temp_val & (MT6328_PMIC_FG_LATCHDATA_ST_MASK << MT6328_PMIC_FG_LATCHDATA_ST_SHIFT)) >> MT6328_PMIC_FG_LATCHDATA_ST_SHIFT;
 
@@ -273,7 +277,7 @@ static kal_int32 fgauge_read_current(void *data)
     //(3)    Read FG_CURRENT_OUT[15:08]
     //(4)    Read FG_CURRENT_OUT[07:00]
     uvalue16 = pmic_get_register_value(PMIC_FG_CURRENT_OUT); //mt6325_upmu_get_fg_current_out();
-    bm_print(BM_LOG_FULL, "[fgauge_read_current] : FG_CURRENT = %x\r\n", uvalue16);
+    bm_print(BM_LOG_FULL, "[fgauge_read_current] : FG_CURRENT = %x\n", uvalue16);
     //(5)    (Read other data)
     //(6)    Clear status to 0
     ret=pmic_config_interface(MT6328_FGADC_CON0, 0x0800, 0xFF00, 0x0);
@@ -381,7 +385,7 @@ kal_int32 fgauge_read_IM_current(void *data)
 
 
     uvalue16 = pmic_get_register_value(PMIC_FG_R_CURR);
-    bm_print(BM_LOG_FULL, "[fgauge_read_IM_current] : FG_CURRENT = %x\r\n", uvalue16);
+    bm_print(BM_LOG_FULL, "[fgauge_read_IM_current] : FG_CURRENT = %x\n", uvalue16);
 
 //calculate the real world data    
     dvalue = (kal_uint32) uvalue16;
@@ -544,7 +548,7 @@ kal_int32 fgauge_set_columb_interrupt_internal(void *data, int reset)
 
 	uvalue32_CAR_MSB = (pmic_get_register_value(PMIC_FG_CAR_31_16) & 0x8000)>>15;
 
-   bm_print(BM_LOG_FULL, "[fgauge_set_columb_interrupt] FG_CAR = 0x%x   uvalue32_CAR_MSB:0x%x\r\n", uvalue32_CAR,uvalue32_CAR_MSB);
+   bm_print(BM_LOG_FULL, "[fgauge_set_columb_interrupt] FG_CAR = 0x%x   uvalue32_CAR_MSB:0x%x\n", uvalue32_CAR,uvalue32_CAR_MSB);
 	uvalue32_CAR = uvalue32_CAR & 0x7fff;
 
 	if(uvalue32_CAR_MSB==1)
@@ -592,7 +596,7 @@ kal_int32 fgauge_set_columb_interrupt_internal(void *data, int reset)
 	pmic_set_register_value(PMIC_RG_INT_EN_FG_BAT_L,1);
 
 
-	bm_print(BM_LOG_FULL, "[fgauge_set_columb_interrupt] low:[0xcae]=0x%x  high:[0xcb0]=0x%x\r\n", 
+	bm_print(BM_LOG_FULL, "[fgauge_set_columb_interrupt] low:[0xcae]=0x%x  high:[0xcb0]=0x%x\n", 
 		pmic_get_register_value(PMIC_FG_BLTR),pmic_get_register_value(PMIC_FG_BFTR));
 	
 	return STATUS_OK;
@@ -653,8 +657,8 @@ static kal_int32 fgauge_read_columb_internal(void *data, int reset, int precise)
     
     uvalue32_CAR_MSB = (pmic_get_register_value(PMIC_FG_CAR_31_16) & 0x8000)>>15;
     
-    bm_print(BM_LOG_FULL, "[fgauge_read_columb_internal] FG_CAR = 0x%x\r\n", uvalue32_CAR);
-    bm_print(BM_LOG_FULL, "[fgauge_read_columb_internal] uvalue32_CAR_MSB = 0x%x\r\n", uvalue32_CAR_MSB);
+    bm_print(BM_LOG_FULL, "[fgauge_read_columb_internal] FG_CAR = 0x%x\n", uvalue32_CAR);
+    bm_print(BM_LOG_FULL, "[fgauge_read_columb_internal] uvalue32_CAR_MSB = 0x%x\n", uvalue32_CAR_MSB);
     
     //(5)    (Read other data)
     //(6)    Clear status to 0

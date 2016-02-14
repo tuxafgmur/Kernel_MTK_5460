@@ -17,10 +17,10 @@
 
 
 #define ACC_TAG					"<ACCELEROMETER> "
-#define ACC_FUN(f)				printk(KERN_ERR ACC_TAG"%s\n", __func__)
+#define ACC_FUN(f)			if (0 > 1) {printk(KERN_ERR ACC_TAG"%s\n", __func__);}
 #define ACC_ERR(fmt, args...)		printk(KERN_ERR ACC_TAG"%s %d : "fmt, __func__, __LINE__, ##args)
-#define ACC_LOG(fmt, args...)		printk(KERN_ERR ACC_TAG fmt, ##args)
-#define ACC_VER(fmt, args...)   	printk(KERN_ERR ACC_TAG"%s: "fmt, __func__, ##args) //((void)0)
+#define ACC_LOG(fmt, args...)		if (0 > 1) {printk(KERN_ERR ACC_TAG fmt, ##args);}
+#define ACC_VER(fmt, args...)   	if (0 > 1) {printk(KERN_ERR ACC_TAG"%s: "fmt, __func__, ##args);} //((void)0)
 
 #define OP_ACC_DELAY	0X01
 #define	OP_ACC_ENABLE	0X02

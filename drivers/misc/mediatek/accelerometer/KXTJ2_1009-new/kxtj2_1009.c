@@ -185,9 +185,9 @@ static struct acc_init_info kxtj2_1009_init_info = {
 
 /*----------------------------------------------------------------------------*/
 #define GSE_TAG                  "[Gsensor] "
-#define GSE_FUN(f)               printk( GSE_TAG"%s\n", __FUNCTION__)
+#define GSE_FUN(f)               if (0 > 1) {printk( GSE_TAG"%s\n", __FUNCTION__);}
 #define GSE_ERR(fmt, args...)    printk(KERN_ERR GSE_TAG"%s %d : "fmt, __FUNCTION__, __LINE__, ##args)
-#define GSE_LOG(fmt, args...)    printk( GSE_TAG fmt, ##args)
+#define GSE_LOG(fmt, args...)    if (0 > 1) {printk( GSE_TAG fmt, ##args);}
 /*----------------------------------------------------------------------------*/
 static struct data_resolution kxtj2_1009_data_resolution[1] = {
  /* combination by {FULL_RES,RANGE}*/

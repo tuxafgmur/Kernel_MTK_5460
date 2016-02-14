@@ -163,9 +163,9 @@ static char selftestRes[8]= {0};
 
 /*----------------------------------------------------------------------------*/
 #define GSE_TAG                  "[Gsensor] "
-#define GSE_FUN(f)               		printk(KERN_ERR GSE_TAG"%s\n", __FUNCTION__)
+#define GSE_FUN(f)               	if(0 > 1) {printk(KERN_ERR GSE_TAG"%s\n", __FUNCTION__);}
 #define GSE_ERR(fmt, args...)    	printk(KERN_ERR GSE_TAG"%s %d : "fmt, __FUNCTION__, __LINE__, ##args)
-#define GSE_LOG(fmt, args...)    	printk(KERN_ERR GSE_TAG fmt, ##args)
+#define GSE_LOG(fmt, args...)    	if(0 > 1) {printk(KERN_ERR GSE_TAG fmt, ##args);}
 /*----------------------------------------------------------------------------*/
 static struct data_resolution mpu6050_data_resolution[] = {
     /*8 combination by {FULL_RES,RANGE}*/

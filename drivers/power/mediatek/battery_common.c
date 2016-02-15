@@ -89,7 +89,7 @@
 /* ////////////////////////////////////////////////////////////////////////////// */
 /* Battery Logging Entry */
 /* ////////////////////////////////////////////////////////////////////////////// */
-int Enable_BATDRV_LOG = BAT_LOG_CRTI;
+int Enable_BATDRV_LOG = BAT_LOG_NONE;
 /* static struct proc_dir_entry *proc_entry; */
 char proc_bat_data[32];
 #if defined(MMX_IN_FULL_POWER)    //weizhengliang add for mmx full charging voltage

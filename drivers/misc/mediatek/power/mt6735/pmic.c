@@ -208,7 +208,7 @@ U32 pmic_config_interface (U32 RegNum, U32 val, U32 MASK, U32 SHIFT)
         mutex_unlock(&pmic_access_mutex);
         return return_value;
     }
-    PMICLOG("[pmic_config_interface] Reg[%x]=0x%x\n", RegNum, pmic_reg);
+    //PMICLOG("[pmic_config_interface] Reg[%x]=0x%x\n", RegNum, pmic_reg);
     #endif
 
     mutex_unlock(&pmic_access_mutex);
@@ -295,7 +295,7 @@ U32 pmic_config_interface_nolock (U32 RegNum, U32 val, U32 MASK, U32 SHIFT)
         mutex_unlock(&pmic_access_mutex);
         return return_value;
     }
-    PMICLOG("[pmic_config_interface] Reg[%x]=0x%x\n", RegNum, pmic_reg);
+    //PMICLOG("[pmic_config_interface] Reg[%x]=0x%x\n", RegNum, pmic_reg);
     #endif
 
 #else
@@ -407,7 +407,7 @@ const static unsigned char mt6328_VIO_1_84[] = {
 
 void upmu_set_rg_vio18_184(void)
 {
-	PMICLOG("[upmu_set_rg_vio18_184] old cal=%d new cal=%d.\r\n", vio18_cal,mt6328_VIO_1_84[vio18_cal]);
+	//PMICLOG("[upmu_set_rg_vio18_184] old cal=%d new cal=%d.\r\n", vio18_cal,mt6328_VIO_1_84[vio18_cal]);
 	pmic_set_register_value(PMIC_RG_VIO18_CAL,mt6328_VIO_1_84[vio18_cal]);
 
 }
@@ -423,16 +423,16 @@ static unsigned char vmc_cal;
 void upmu_set_rg_vmc_184(kal_uint8 x)
 {
     
-	PMICLOG("[upmu_set_rg_vio18_184] old cal=%d new cal=%d.\r\n", vmc_cal,mt6328_VMC_1_86[vmc_cal]);
+	//PMICLOG("[upmu_set_rg_vio18_184] old cal=%d new cal=%d.\r\n", vmc_cal,mt6328_VMC_1_86[vmc_cal]);
     if(x==0)
     {
     	pmic_set_register_value(PMIC_RG_VMC_CAL,vmc_cal);
-		PMICLOG("[upmu_set_rg_vio18_184]:0 old cal=%d new cal=%d.\r\n", vmc_cal,vmc_cal);
+		//PMICLOG("[upmu_set_rg_vio18_184]:0 old cal=%d new cal=%d.\r\n", vmc_cal,vmc_cal);
     }
 	else
 	{
 		pmic_set_register_value(PMIC_RG_VMC_CAL,mt6328_VMC_1_86[vmc_cal]);
-		PMICLOG("[upmu_set_rg_vio18_184]:1 old cal=%d new cal=%d.\r\n", vmc_cal,mt6328_VMC_1_86[vmc_cal]);
+		//PMICLOG("[upmu_set_rg_vio18_184]:1 old cal=%d new cal=%d.\r\n", vmc_cal,mt6328_VMC_1_86[vmc_cal]);
 	}
 }
 
@@ -447,16 +447,16 @@ const static unsigned char mt6328_vcamd[] = {
 void upmu_set_rg_vcamd(kal_uint8 x)
 {
     
-	PMICLOG("[upmu_set_rg_vcamd] old cal=%d new cal=%d.\r\n", vcamd_cal,mt6328_vcamd[vcamd_cal]);
+	//PMICLOG("[upmu_set_rg_vcamd] old cal=%d new cal=%d.\r\n", vcamd_cal,mt6328_vcamd[vcamd_cal]);
     if(x==0)
     {
     	pmic_set_register_value(PMIC_RG_VCAMD_CAL,vcamd_cal);
-		PMICLOG("[upmu_set_rg_vcamd]:0 old cal=%d new cal=%d.\r\n", vcamd_cal,vcamd_cal);
+		//PMICLOG("[upmu_set_rg_vcamd]:0 old cal=%d new cal=%d.\r\n", vcamd_cal,vcamd_cal);
     }
 	else
 	{
 		pmic_set_register_value(PMIC_RG_VCAMD_CAL,mt6328_vcamd[vcamd_cal]);
-		PMICLOG("[upmu_set_rg_vcamd]:1 old cal=%d new cal=%d.\r\n", vcamd_cal,mt6328_vcamd[vcamd_cal]);
+		//PMICLOG("[upmu_set_rg_vcamd]:1 old cal=%d new cal=%d.\r\n", vcamd_cal,mt6328_vcamd[vcamd_cal]);
 	}
 }
 
@@ -506,7 +506,7 @@ int pmic_read_VMC_efuse(void)
 //==============================================================================
 void upmu_interrupt_chrdet_int_en(kal_uint32 val)
 {
-    PMICLOG("[upmu_interrupt_chrdet_int_en] val=%d.\r\n", val);
+    //PMICLOG("[upmu_interrupt_chrdet_int_en] val=%d.\r\n", val);
 
     //mt6325_upmu_set_rg_int_en_chrdet(val);
     pmic_set_register_value(PMIC_RG_INT_EN_CHRDET,val);
@@ -534,7 +534,7 @@ kal_uint32 upmu_get_rgs_chrdet(void)
 U32 g_reg_value=0;
 static ssize_t show_pmic_access(struct device *dev,struct device_attribute *attr, char *buf)
 {
-    PMICLOG("[show_pmic_access] 0x%x\n", g_reg_value);
+    //PMICLOG("[show_pmic_access] 0x%x\n", g_reg_value);
     return sprintf(buf, "%u\n", g_reg_value);
 }
 static ssize_t store_pmic_access(struct device *dev,struct device_attribute *attr, const char *buf, size_t size)
@@ -543,23 +543,23 @@ static ssize_t store_pmic_access(struct device *dev,struct device_attribute *att
     char *pvalue = NULL;
     U32 reg_value = 0;
     U32 reg_address = 0;
-    PMICLOG("[store_pmic_access] \n");
+    //PMICLOG("[store_pmic_access] \n");
     if(buf != NULL && size != 0)
     {
-        PMICLOG("[store_pmic_access] buf is %s \n",buf);
+        //PMICLOG("[store_pmic_access] buf is %s \n",buf);
         reg_address = simple_strtoul(buf,&pvalue,16);
 
         if(size > 5)
         {
             reg_value = simple_strtoul((pvalue+1),NULL,16);
-            PMICLOG("[store_pmic_access] write PMU reg 0x%x with value 0x%x !\n",reg_address,reg_value);
+            //PMICLOG("[store_pmic_access] write PMU reg 0x%x with value 0x%x !\n",reg_address,reg_value);
             ret=pmic_config_interface(reg_address, reg_value, 0xFFFF, 0x0);
         }
         else
         {
             ret=pmic_read_interface(reg_address, &g_reg_value, 0xFFFF, 0x0);
-            PMICLOG("[store_pmic_access] read PMU reg 0x%x with value 0x%x !\n",reg_address,g_reg_value);
-            PMICLOG("[store_pmic_access] Please use \"cat pmic_access\" to get value\r\n");
+            //PMICLOG("[store_pmic_access] read PMU reg 0x%x with value 0x%x !\n",reg_address,g_reg_value);
+            //PMICLOG("[store_pmic_access] Please use \"cat pmic_access\" to get value\r\n");
         }
     }
     return size;
@@ -573,7 +573,7 @@ kal_uint8 g_reg_value_pmic=0;
 
 static ssize_t show_pmic_dvt(struct device *dev,struct device_attribute *attr, char *buf)
 {
-    PMICLOG("[show_pmic_dvt] 0x%x\n", g_reg_value_pmic);
+    //PMICLOG("[show_pmic_dvt] 0x%x\n", g_reg_value_pmic);
     return sprintf(buf, "%u\n", g_reg_value_pmic);
 }
 
@@ -582,13 +582,13 @@ static ssize_t store_pmic_dvt(struct device *dev,struct device_attribute *attr, 
     char *pvalue = NULL;
     unsigned int test_item = 0;
     
-    PMICLOG("[store_pmic_dvt] \n");
+    //PMICLOG("[store_pmic_dvt] \n");
     
     if(buf != NULL && size != 0)
     {
         PMICLOG("[store_pmic_dvt] buf is %s and size is %zu \n",buf,size);
         test_item = simple_strtoul(buf,&pvalue,10);
-        PMICLOG("[store_pmic_dvt] test_item=%d\n", test_item);
+        //PMICLOG("[store_pmic_dvt] test_item=%d\n", test_item);
 
         #ifdef MTK_PMIC_DVT_SUPPORT 
         pmic_dvt_entry(test_item);
@@ -620,8 +620,8 @@ static int mtk_regulator_enable(struct regulator_dev *rdev)
 		val=upmu_get_reg_value(pmu_flags_table[mreg->en_reg].offset);
 	}
 
-	PMICLOG("regulator_enable(name=%s id=%d en_reg=%x vol_reg=%x) [%x]=0x%x\n",rdesc->name, rdesc->id
-		,mreg->en_reg,mreg->vol_reg,add,val);
+	//PMICLOG("regulator_enable(name=%s id=%d en_reg=%x vol_reg=%x) [%x]=0x%x\n",rdesc->name, rdesc->id
+	//	,mreg->en_reg,mreg->vol_reg,add,val);
 
 	return 0;
 }
@@ -647,8 +647,8 @@ static int mtk_regulator_disable(struct regulator_dev *rdev)
 		val=upmu_get_reg_value(pmu_flags_table[mreg->en_reg].offset);		
 	}
 
-	PMICLOG("regulator_disable(name=%s id=%d en_reg=%x vol_reg=%x use_count=%d) [%x]=0x%x\n",rdesc->name, rdesc->id
-		,mreg->en_reg,mreg->vol_reg,rdev->use_count,add,val);
+	//PMICLOG("regulator_disable(name=%s id=%d en_reg=%x vol_reg=%x use_count=%d) [%x]=0x%x\n",rdesc->name, rdesc->id
+	//	,mreg->en_reg,mreg->vol_reg,rdev->use_count,add,val);
 
 	return 0;
 }
@@ -663,8 +663,8 @@ static int mtk_regulator_is_enabled(struct regulator_dev *rdev)
 
 	en=pmic_get_register_value(mreg->en_reg);
 		
-	PMICLOG("regulator_is_enabled(name=%s id=%d en_reg=%x vol_reg=%x en=%d)\n",rdesc->name, rdesc->id
-		,mreg->en_reg,mreg->vol_reg,en);
+	//PMICLOG("regulator_is_enabled(name=%s id=%d en_reg=%x vol_reg=%x en=%d)\n",rdesc->name, rdesc->id
+	//	,mreg->en_reg,mreg->vol_reg,en);
 	
 	return en;
 }
@@ -699,8 +699,8 @@ static int mtk_regulator_get_voltage_sel(struct regulator_dev *rdev)
 		}
 		else
 		{
-			PMICLOG("regulator_get_voltage_sel bugl(name=%s id=%d en_reg=%x vol_reg=%x)\n",rdesc->name, rdesc->id
-				,mreg->en_reg,mreg->vol_reg);		
+			//PMICLOG("regulator_get_voltage_sel bugl(name=%s id=%d en_reg=%x vol_reg=%x)\n",rdesc->name, rdesc->id
+			//	,mreg->en_reg,mreg->vol_reg);		
 		}
 	}
 	else
@@ -713,13 +713,13 @@ static int mtk_regulator_get_voltage_sel(struct regulator_dev *rdev)
 		}
 		else
 		{
-			PMICLOG("regulator_get_voltage_sel bugl(name=%s id=%d en_reg=%x vol_reg=%x)\n",rdesc->name, rdesc->id
-				,mreg->en_reg,mreg->vol_reg);		
+			//PMICLOG("regulator_get_voltage_sel bugl(name=%s id=%d en_reg=%x vol_reg=%x)\n",rdesc->name, rdesc->id
+			//	,mreg->en_reg,mreg->vol_reg);		
 		}
 	}
 	
-	PMICLOG("regulator_get_voltage_sel(name=%s id=%d en_reg=%x vol_reg=%x reg/sel:%d voltage:%d [0x%x]=0x%x)\n",rdesc->name, rdesc->id
-		,mreg->en_reg,mreg->vol_reg,regVal,voltage,add,val);
+	//PMICLOG("regulator_get_voltage_sel(name=%s id=%d en_reg=%x vol_reg=%x reg/sel:%d voltage:%d [0x%x]=0x%x)\n",rdesc->name, rdesc->id
+	//	,mreg->en_reg,mreg->vol_reg,regVal,voltage,add,val);
 
 	return regVal;
 }
@@ -732,8 +732,8 @@ static int mtk_regulator_set_voltage_sel(struct regulator_dev *rdev,
 
 	mreg=container_of(rdesc,struct mtk_regulator,desc);
 		
-	PMICLOG("regulator_set_voltage_sel(name=%s id=%d en_reg=%x vol_reg=%x selector=%d)\n",rdesc->name, rdesc->id
-		,mreg->en_reg,mreg->vol_reg,selector);
+	//PMICLOG("regulator_set_voltage_sel(name=%s id=%d en_reg=%x vol_reg=%x selector=%d)\n",rdesc->name, rdesc->id
+	//	,mreg->en_reg,mreg->vol_reg,selector);
 	
 
 	if(strcmp(rdesc->name,"VCAMD")==0)
@@ -807,8 +807,8 @@ static int mtk_regulator_list_voltage(struct regulator_dev *rdev,
 		}
 		else
 		{
-			PMICLOG("mtk_regulator_list_voltage bugl(name=%s id=%d en_reg=%x vol_reg=%x)\n",rdesc->name, rdesc->id
-				,mreg->en_reg,mreg->vol_reg);		
+			//PMICLOG("mtk_regulator_list_voltage bugl(name=%s id=%d en_reg=%x vol_reg=%x)\n",rdesc->name, rdesc->id
+			//	,mreg->en_reg,mreg->vol_reg);		
 		}
 	}
 	else
@@ -881,7 +881,7 @@ static ssize_t show_LDO_VOLTAGE(struct device *dev,struct device_attribute *attr
 		}
 		else
 		{
-			PMICLOG("[EM][ERROR] LDO_%s_VOLTAGE : voltage=0 vol_reg=0\n", mreg->desc.name);
+			//PMICLOG("[EM][ERROR] LDO_%s_VOLTAGE : voltage=0 vol_reg=0\n", mreg->desc.name);
 		}
 	}
 	else
@@ -891,7 +891,7 @@ static ssize_t show_LDO_VOLTAGE(struct device *dev,struct device_attribute *attr
 	}
 
 	ret_value=ret_value/1000;
-	PMICLOG("[EM] LDO_%s_VOLTAGE : %d\n", mreg->desc.name,ret_value);
+	//PMICLOG("[EM] LDO_%s_VOLTAGE : %d\n", mreg->desc.name,ret_value);
 	return sprintf(buf, "%u\n", ret_value);
 
 }
@@ -947,7 +947,7 @@ static ssize_t show_BUCK_VOLTAGE(struct device *dev,struct device_attribute *att
 		}
 		else
 		{
-			PMICLOG("[EM][ERROR] buck_%s_VOLTAGE : voltage=0 vol_reg=0\n", mreg->desc.name);
+			//PMICLOG("[EM][ERROR] buck_%s_VOLTAGE : voltage=0 vol_reg=0\n", mreg->desc.name);
 		}
 	}
 	else
@@ -957,7 +957,7 @@ static ssize_t show_BUCK_VOLTAGE(struct device *dev,struct device_attribute *att
 	}
 
 	ret_value=ret_value/1000;
-	PMICLOG("[EM] BUCK_%s_VOLTAGE : %d\n", mreg->desc.name,ret_value);
+	//PMICLOG("[EM] BUCK_%s_VOLTAGE : %d\n", mreg->desc.name,ret_value);
 	return sprintf(buf, "%u\n", ret_value);
 }
 static ssize_t store_BUCK_VOLTAGE(struct device *dev,struct device_attribute *attr, const char *buf, size_t size)
@@ -1189,11 +1189,11 @@ void mtk_regulator_init(struct platform_device *dev)
 					{
 						mtk_ldos[i].init_data.constraints.max_uV=(mtk_ldos[i].desc.n_voltages-1)*mtk_ldos[i].desc.uV_step+mtk_ldos[i].desc.min_uV;
 						mtk_ldos[i].init_data.constraints.min_uV=mtk_ldos[i].desc.min_uV;
-						PMICLOG("test man_uv:%d min_uv:%d  \n", (mtk_ldos[i].desc.n_voltages-1)*mtk_ldos[i].desc.uV_step+mtk_ldos[i].desc.min_uV,
-							mtk_ldos[i].desc.min_uV);
+						//PMICLOG("test man_uv:%d min_uv:%d  \n", (mtk_ldos[i].desc.n_voltages-1)*mtk_ldos[i].desc.uV_step+mtk_ldos[i].desc.min_uV,
+						//	mtk_ldos[i].desc.min_uV);
 					}
 				}
-				PMICLOG("min_uv:%d max_uv:%d  \n", mtk_ldos[i].init_data.constraints.min_uV,mtk_ldos[i].init_data.constraints.max_uV);
+				//PMICLOG("min_uv:%d max_uv:%d  \n", mtk_ldos[i].init_data.constraints.min_uV,mtk_ldos[i].init_data.constraints.max_uV);
 			}
 
 			mtk_ldos[i].desc.owner=THIS_MODULE;
@@ -1203,13 +1203,13 @@ void mtk_regulator_init(struct platform_device *dev)
 			    ret = PTR_ERR(mtk_ldos[i].rdev);
 			    PMICLOG("[regulator_register] failed to register %s (%d)\n", mtk_ldos[i].desc.name, ret);
 			} else {
-			    PMICLOG("[regulator_register] pass to register %s\n", mtk_ldos[i].desc.name);
+			    //PMICLOG("[regulator_register] pass to register %s\n", mtk_ldos[i].desc.name);
 			}
 			mtk_ldos[i].reg=regulator_get(&(dev->dev), mtk_ldos[i].desc.name);
 			isEn=regulator_is_enabled(mtk_ldos[i].reg); 
 			if(isEn!=0)
 			{
-				PMICLOG("[regulator] %s is default on\n", mtk_ldos[i].desc.name);
+				//PMICLOG("[regulator] %s is default on\n", mtk_ldos[i].desc.name);
 				//ret=regulator_enable(mtk_ldos[i].reg);
 			}			
 		}
@@ -1230,14 +1230,14 @@ void pmic6328_regulator_test(void)
 		if (mtk_ldos[i].isUsedable==1)
 		{
 			reg=mtk_ldos[i].reg;
-			PMICLOG("[regulator enable test] %s\n", mtk_ldos[i].desc.name);
+			//PMICLOG("[regulator enable test] %s\n", mtk_ldos[i].desc.name);
 			
 			ret1=regulator_enable(reg);
 			ret2=regulator_is_enabled(reg);
 
 			if(ret2==pmic_get_register_value(mtk_ldos[i].en_reg))
 			{
-				PMICLOG("[enable test pass] \n");
+				//PMICLOG("[enable test pass] \n");
 			}
 			else
 			{
@@ -1251,7 +1251,7 @@ void pmic6328_regulator_test(void)
 
 			if(ret2==pmic_get_register_value(mtk_ldos[i].en_reg))
 			{
-				PMICLOG("[disable test pass] \n");
+				//PMICLOG("[disable test pass] \n");
 			}
 			else
 			{
@@ -1270,7 +1270,7 @@ void pmic6328_regulator_test(void)
 		reg=mtk_ldos[i].reg;
 		if (mtk_ldos[i].isUsedable==1)
 		{
-			PMICLOG("[regulator voltage test] %s voltage:%d \n", mtk_ldos[i].desc.name,mtk_ldos[i].desc.n_voltages);
+			//PMICLOG("[regulator voltage test] %s voltage:%d \n", mtk_ldos[i].desc.name,mtk_ldos[i].desc.n_voltages);
 
 			if(mtk_ldos[i].pvoltages!=NULL)
 			{
@@ -1285,14 +1285,14 @@ void pmic6328_regulator_test(void)
 
 					if((j==pmic_get_register_value(mtk_ldos[i].vol_reg))&& (pVoltage[j]==rvoltage))
 					{
-						PMICLOG("[%d:%d]:pass  set_voltage:%d  rvoltage:%d \n",j,pmic_get_register_value(mtk_ldos[i].vol_reg),
-						pVoltage[j] ,rvoltage);	
+						//PMICLOG("[%d:%d]:pass  set_voltage:%d  rvoltage:%d \n",j,pmic_get_register_value(mtk_ldos[i].vol_reg),
+						//pVoltage[j] ,rvoltage);	
 						
-					}
-					else
-					{
-						PMICLOG("[%d:%d]:fail  set_voltage:%d  rvoltage:%d \n",j,pmic_get_register_value(mtk_ldos[i].vol_reg),
-						pVoltage[j] ,rvoltage);						
+					//}
+					//else
+					//{
+						//PMICLOG("[%d:%d]:fail  set_voltage:%d  rvoltage:%d \n",j,pmic_get_register_value(mtk_ldos[i].vol_reg),
+						//pVoltage[j] ,rvoltage);						
 					}		
 				}
 			}
@@ -1363,7 +1363,7 @@ bool hwPowerOn(MT65XX_POWER powerId, int powerVolt, char *mode_name)
 		PMICLOG("hwPowerOn:%s enable fail",mtk_ldos[powerId].desc.name);
 	}
 
-	PMICLOG("hwPowerOn:%d:%s volt:%d name:%s cnt:%d",powerId,mtk_ldos[powerId].desc.name,powerVolt,mode_name,mtk_ldos[powerId].rdev->use_count);
+	//PMICLOG("hwPowerOn:%d:%s volt:%d name:%s cnt:%d",powerId,mtk_ldos[powerId].desc.name,powerVolt,mode_name,mtk_ldos[powerId].rdev->use_count);
 	return TRUE;
 }
 EXPORT_SYMBOL(hwPowerOn);
@@ -1387,7 +1387,7 @@ bool hwPowerDown(MT65XX_POWER powerId, char *mode_name)
 		PMICLOG("hwPowerOn err:ret1:%d ",ret1);
 	}
 
-	PMICLOG("hwPowerDown:%d:%s name:%s cnt:%d",powerId,mtk_ldos[powerId].desc.name,mode_name,mtk_ldos[powerId].rdev->use_count);
+	//PMICLOG("hwPowerDown:%d:%s name:%s cnt:%d",powerId,mtk_ldos[powerId].desc.name,mode_name,mtk_ldos[powerId].rdev->use_count);
 	return TRUE;
 }
 EXPORT_SYMBOL(hwPowerDown);
@@ -1410,7 +1410,7 @@ bool hwPowerSetVoltage(MT65XX_POWER powerId, int powerVolt, char *mode_name)
 	}
 
 
-	PMICLOG("hwPowerSetVoltage:%d:%s name:%s cnt:%d",powerId,mtk_ldos[powerId].desc.name,mode_name,mtk_ldos[powerId].rdev->use_count);
+	//PMICLOG("hwPowerSetVoltage:%d:%s name:%s cnt:%d",powerId,mtk_ldos[powerId].desc.name,mode_name,mtk_ldos[powerId].rdev->use_count);
 	return TRUE;
 }
 EXPORT_SYMBOL(hwPowerSetVoltage);
@@ -1456,7 +1456,7 @@ void register_low_battery_notify( void (*low_battery_callback)(LOW_BATTERY_LEVEL
 
     lbcb_tb[prio_val].lbcb = low_battery_callback;
     
-    PMICLOG("[register_low_battery_notify] prio_val=%d\n",prio_val);
+    //PMICLOG("[register_low_battery_notify] prio_val=%d\n",prio_val);
 }
 
 void exec_low_battery_callback(LOW_BATTERY_LEVEL low_battery_level) //0:no limit
@@ -1475,7 +1475,7 @@ void exec_low_battery_callback(LOW_BATTERY_LEVEL low_battery_level) //0:no limit
             {
                 low_battery_callback = lbcb_tb[i].lbcb;
                 low_battery_callback(low_battery_level);
-                PMICLOG("[exec_low_battery_callback] prio_val=%d,low_battery=%d\n",i,low_battery_level);
+                //PMICLOG("[exec_low_battery_callback] prio_val=%d,low_battery=%d\n",i,low_battery_level);
             }        
         }
     }
@@ -1509,15 +1509,15 @@ void low_battery_protect_init(void)
 	lbat_min_en_setting(1);
 	lbat_max_en_setting(0);
 
-	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-	        MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
-	        MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
-	        MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
-	        );
+// 	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+// 	        MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
+// 	        MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
+// 	        MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
+// 	        );
 
-	PMICLOG("[low_battery_protect_init] %d mV, %d mV, %d mV\n",
-	    POWER_INT0_VOLT, POWER_INT1_VOLT, POWER_INT2_VOLT);
-	PMICLOG("[low_battery_protect_init] Done\n");
+// 	PMICLOG("[low_battery_protect_init] %d mV, %d mV, %d mV\n",
+// 	    POWER_INT0_VOLT, POWER_INT1_VOLT, POWER_INT2_VOLT);
+ 	PMICLOG("[low_battery_protect_init] Done\n");
 
 }
 
@@ -1527,7 +1527,7 @@ void bat_h_int_handler(void)
 {
 	g_lowbat_int_bottom=0;
 	
-	PMICLOG("[bat_h_int_handler]....\n");
+	//PMICLOG("[bat_h_int_handler]....\n");
 
 	//sub-task
 #ifdef LOW_BATTERY_PROTECT
@@ -1547,18 +1547,18 @@ void bat_h_int_handler(void)
 	lbat_min_en_setting(1);   
 #endif
 
-	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-	        MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
-	        MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
-	        MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
-	        );
+// 	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+// 	        MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
+// 	        MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
+// 	        MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
+// 	        );
 #endif 
 
 }
 
 void bat_l_int_handler(void)
 {
-	PMICLOG("[bat_l_int_handler]....\n");
+	//PMICLOG("[bat_l_int_handler]....\n");
 
 	//sub-task
 #ifdef LOW_BATTERY_PROTECT
@@ -1574,7 +1574,7 @@ void bat_l_int_handler(void)
 		g_lowbat_int_bottom=1;
 	}
 	else                            
-	PMICLOG("[bat_l_int_handler]err,g_low_battery_level=%d\n", g_low_battery_level);
+	//PMICLOG("[bat_l_int_handler]err,g_low_battery_level=%d\n", g_low_battery_level);
 
 #if 0
 	lbat_min_en_setting(0);
@@ -1594,11 +1594,11 @@ void bat_l_int_handler(void)
 	lbat_max_en_setting(1);
 #endif
 
-	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-	        MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
-	        MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
-	MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
-	);
+// 	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+// 	        MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
+// 	        MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
+// 	MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
+// 	);
 #endif 
 
 }
@@ -1638,11 +1638,11 @@ void (*battery_oc_callback)(BATTERY_OC_LEVEL);
 
 void register_battery_oc_notify( void (*battery_oc_callback)(BATTERY_OC_LEVEL), BATTERY_OC_PRIO prio_val )
 {
-    PMICLOG("[register_battery_oc_notify] start\n");
+    //PMICLOG("[register_battery_oc_notify] start\n");
 
     occb_tb[prio_val].occb = battery_oc_callback;
     
-    PMICLOG("[register_battery_oc_notify] prio_val=%d\n",prio_val);
+    //PMICLOG("[register_battery_oc_notify] prio_val=%d\n",prio_val);
 }
 
 void exec_battery_oc_callback(BATTERY_OC_LEVEL battery_oc_level) //0:no limit
@@ -1661,7 +1661,7 @@ void exec_battery_oc_callback(BATTERY_OC_LEVEL battery_oc_level) //0:no limit
             {
                 battery_oc_callback = occb_tb[i].occb;
                 battery_oc_callback(battery_oc_level);
-                PMICLOG("[exec_battery_oc_callback] prio_val=%d,battery_oc_level=%d\n",i,battery_oc_level);
+                //PMICLOG("[exec_battery_oc_callback] prio_val=%d,battery_oc_level=%d\n",i,battery_oc_level);
             }        
         }
     }
@@ -1685,14 +1685,14 @@ void battery_oc_protect_init(void)
     bat_oc_h_en_setting(0);
     bat_oc_l_en_setting(1);
 
-    PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-        MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
-        MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
-        MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
-        );
+//     PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+//         MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
+//         MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
+//         MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
+//         );
 
-    PMICLOG("[battery_oc_protect_init] %d mA, %d mA\n",
-        POWER_BAT_OC_CURRENT_H, POWER_BAT_OC_CURRENT_L);
+//     PMICLOG("[battery_oc_protect_init] %d mA, %d mA\n",
+//         POWER_BAT_OC_CURRENT_H, POWER_BAT_OC_CURRENT_L);
     PMICLOG("[battery_oc_protect_init] Done\n");  
 }
 
@@ -1702,14 +1702,14 @@ void battery_oc_protect_reinit(void)
     pmic_set_register_value(PMIC_FG_CUR_HTH,BAT_OC_H_THD_RE);//mt6325_upmu_set_fg_cur_hth(BAT_OC_H_THD_RE);
     pmic_set_register_value(PMIC_FG_CUR_LTH,BAT_OC_L_THD_RE);//mt6325_upmu_set_fg_cur_lth(BAT_OC_L_THD_RE);
 
-    PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-        MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
-        MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
-        MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
-        );
+//     PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+//         MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
+//         MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
+//         MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
+//         );
 
-    PMICLOG("[battery_oc_protect_reinit] %d mA, %d mA\n",
-        POWER_BAT_OC_CURRENT_H_RE, POWER_BAT_OC_CURRENT_L_RE);
+//     PMICLOG("[battery_oc_protect_reinit] %d mA, %d mA\n",
+//         POWER_BAT_OC_CURRENT_H_RE, POWER_BAT_OC_CURRENT_L_RE);
     PMICLOG("[battery_oc_protect_reinit] Done\n");  
 #else
     PMICLOG("[battery_oc_protect_reinit] no define BATTERY_OC_PROTECT\n");
@@ -1718,7 +1718,7 @@ void battery_oc_protect_reinit(void)
 
 void fg_cur_h_int_handler(void)
 {
-    PMICLOG("[fg_cur_h_int_handler]....\n");
+    //PMICLOG("[fg_cur_h_int_handler]....\n");
      
     //sub-task
 #ifdef BATTERY_OC_PROTECT
@@ -1729,17 +1729,17 @@ void fg_cur_h_int_handler(void)
     mdelay(1);
     bat_oc_l_en_setting(1);
     
-    PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-        MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
-        MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
-        MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
-        );
+//     PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+//         MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
+//         MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
+//         MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
+//         );
 #endif 
 }
 
 void fg_cur_l_int_handler(void)
 {
-	PMICLOG("[fg_cur_l_int_handler]....\n");
+	//PMICLOG("[fg_cur_l_int_handler]....\n");
     
     //sub-task
 #ifdef BATTERY_OC_PROTECT
@@ -1750,11 +1750,11 @@ void fg_cur_l_int_handler(void)
     mdelay(1);
     bat_oc_h_en_setting(1);
     
-    PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-        MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
-        MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
-        MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
-        );
+//     PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+//         MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
+//         MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
+//         MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
+//         );
 #endif
 }
 
@@ -1795,7 +1795,7 @@ void (*battery_percent_callback)(BATTERY_PERCENT_LEVEL);
 
 void register_battery_percent_notify( void (*battery_percent_callback)(BATTERY_PERCENT_LEVEL), BATTERY_PERCENT_PRIO prio_val )
 {
-    PMICLOG("[register_battery_percent_notify] start\n");
+    //PMICLOG("[register_battery_percent_notify] start\n");
 
     bpcb_tb[prio_val].bpcb = battery_percent_callback;
     
@@ -1833,13 +1833,13 @@ void exec_battery_percent_callback(BATTERY_PERCENT_LEVEL battery_percent_level) 
             {
                 battery_percent_callback = bpcb_tb[i].bpcb;
                 battery_percent_callback(battery_percent_level);
-                PMICLOG("[exec_battery_percent_callback] prio_val=%d,battery_percent_level=%d\n",i,battery_percent_level);
+                //PMICLOG("[exec_battery_percent_callback] prio_val=%d,battery_percent_level=%d\n",i,battery_percent_level);
             }        
         }
       #else
         battery_percent_callback = bpcb_tb[BATTERY_PERCENT_PRIO_FLASHLIGHT].bpcb;
         battery_percent_callback(battery_percent_level);
-        PMICLOG("[exec_battery_percent_callback at DLPT] prio_val=%d,battery_percent_level=%d\n",BATTERY_PERCENT_PRIO_FLASHLIGHT,battery_percent_level);
+        //PMICLOG("[exec_battery_percent_callback at DLPT] prio_val=%d,battery_percent_level=%d\n",BATTERY_PERCENT_PRIO_FLASHLIGHT,battery_percent_level);
       #endif
     }
 }
@@ -1875,7 +1875,7 @@ int bat_percent_notify_handler(void *unused)
         }
         bat_percent_notify_flag = KAL_FALSE;
         
-        PMICLOG("bat_per_level=%d,bat_per_val=%d\n",g_battery_percent_level,bat_per_val);
+        //PMICLOG("bat_per_level=%d,bat_per_val=%d\n",g_battery_percent_level,bat_per_val);
 
         mutex_unlock(&bat_percent_notify_mutex);
         wake_unlock(&bat_percent_notify_lock);
@@ -1891,7 +1891,7 @@ enum hrtimer_restart bat_percent_notify_task(struct hrtimer *timer)
 {
     bat_percent_notify_flag = KAL_TRUE; 
     wake_up_interruptible(&bat_percent_notify_waiter);
-    PMICLOG("bat_percent_notify_task is called\n");
+    //PMICLOG("bat_percent_notify_task is called\n");
     
     return HRTIMER_NORESTART;
 }
@@ -1912,7 +1912,7 @@ void bat_percent_notify_init(void)
     }
     else
     {
-        PMICLOG("Create bat_percent_notify_thread : done\n");
+        //PMICLOG("Create bat_percent_notify_thread : done\n");
     }
 }
 
@@ -2110,11 +2110,11 @@ void register_dlpt_notify( void (*dlpt_callback)(unsigned int), DLPT_PRIO prio_v
 
     dlpt_cb_tb[prio_val].dlpt_cb = dlpt_callback;
     
-    PMICLOG("[register_dlpt_notify] prio_val=%d\n",prio_val);
+    //PMICLOG("[register_dlpt_notify] prio_val=%d\n",prio_val);
 
     if( (g_dlpt_stop==0) && (g_dlpt_val!=0) )
     {
-        PMICLOG("[register_dlpt_notify] dlpt happen\n");
+        //PMICLOG("[register_dlpt_notify] dlpt happen\n");
         dlpt_callback(g_dlpt_val);        
     }
 }
@@ -2137,7 +2137,7 @@ void exec_dlpt_callback(unsigned int dlpt_val)
             {
                 dlpt_callback = dlpt_cb_tb[i].dlpt_cb;                
                 dlpt_callback(g_dlpt_val);
-                PMICLOG("[exec_dlpt_callback] g_dlpt_val=%d\n", g_dlpt_val);
+                //PMICLOG("[exec_dlpt_callback] g_dlpt_val=%d\n", g_dlpt_val);
             }        
         }
     }
@@ -2394,7 +2394,7 @@ int get_dlpt_imix(void)
 	
 	imix=(curr_avg+(volt_avg-g_lbatInt1)*1000/ptim_rac_val_avg)/10;
 
-		PMICLOG("[get_dlpt_imix] %d,%d,%d,%d,%d,%d,%d\n",volt_avg,curr_avg,g_lbatInt1,ptim_rac_val_avg,imix,BMT_status.SOC,bat_get_ui_percentage());
+		//PMICLOG("[get_dlpt_imix] %d,%d,%d,%d,%d,%d,%d\n",volt_avg,curr_avg,g_lbatInt1,ptim_rac_val_avg,imix,BMT_status.SOC,bat_get_ui_percentage());
 
 	ptim_imix=imix;
 
@@ -2417,8 +2417,8 @@ int get_dlpt_imix_charging(void)
 #endif
 
 	imix_val=(zcv_val-vsys_min_1_val)*1000/ptim_rac_val_avg*9/10;
-    PMICLOG("[dlpt] get_dlpt_imix_charging %d %d %d %d\n",
-        imix_val,zcv_val,vsys_min_1_val,ptim_rac_val_avg);
+//     PMICLOG("[dlpt] get_dlpt_imix_charging %d %d %d %d\n",
+//         imix_val,zcv_val,vsys_min_1_val,ptim_rac_val_avg);
 
     return imix_val;
 }
@@ -2443,9 +2443,9 @@ int dlpt_check_power_off(void)
                 ret=0;
             }
 
-            PMICLOG("[dlpt_check_power_off] ptim_imix=%d,POWEROFF_BAT_CURRENT=%d,g_low_battery_level=%d,ret=%d,g_lowbat_int_bottom=%d\n", 
-                ptim_imix, POWEROFF_BAT_CURRENT, g_low_battery_level, ret, g_lowbat_int_bottom
-                );
+//             PMICLOG("[dlpt_check_power_off] ptim_imix=%d,POWEROFF_BAT_CURRENT=%d,g_low_battery_level=%d,ret=%d,g_lowbat_int_bottom=%d\n", 
+//                 ptim_imix, POWEROFF_BAT_CURRENT, g_low_battery_level, ret, g_lowbat_int_bottom
+//                 );
         }
     }
 
@@ -2490,14 +2490,14 @@ int dlpt_notify_handler(void *unused)
             g_low_per_timer+=10;
             if(g_low_per_timer > g_low_per_timeout_val)
             g_low_per_timer=0;
-            PMICLOG("[DLPT] g_low_per_timer=%d,g_low_per_timeout_val=%d\n", g_low_per_timer, g_low_per_timeout_val);
+            //PMICLOG("[DLPT] g_low_per_timer=%d,g_low_per_timeout_val=%d\n", g_low_per_timer, g_low_per_timeout_val);
         }
         else
         {
             g_low_per_timer=0;
         }
 		
-		PMICLOG("[dlpt_notify_handler] %d %d %d %d %d\n",pre_ui_soc,cur_ui_soc,g_imix_val,g_low_per_timer,g_low_per_timeout_val);
+		//PMICLOG("[dlpt_notify_handler] %d %d %d %d %d\n",pre_ui_soc,cur_ui_soc,g_imix_val,g_low_per_timer,g_low_per_timeout_val);
 /*
         if( ((pre_ui_soc-cur_ui_soc)>=diff_ui_soc) || 
             ((cur_ui_soc-pre_ui_soc)>=diff_ui_soc) ||
@@ -2512,7 +2512,7 @@ int dlpt_notify_handler(void *unused)
             PMICLOG("[DLPT] is running \n");
 			if(ptim_rac_val_avg==0)
 			{
-				 PMICLOG("[DLPT] ptim_rac_val_avg=0 , skip\n");
+				 //PMICLOG("[DLPT] ptim_rac_val_avg=0 , skip\n");
 			}
 			else
         {   
@@ -2557,13 +2557,13 @@ int dlpt_notify_handler(void *unused)
             else
             {
                 exec_dlpt_callback(1);
-				PMICLOG("[DLPT] return 1\n");
+				//PMICLOG("[DLPT] return 1\n");
             }
 
             pre_ui_soc=cur_ui_soc;
 
-	            PMICLOG("[DLPT_final] %d,%d,%d,%d,%d,%d\n", 
-					g_imix_val,g_imix_val_pre,pre_ui_soc,cur_ui_soc,diff_ui_soc, IMAX_MAX_VALUE);			
+	            //PMICLOG("[DLPT_final] %d,%d,%d,%d,%d,%d\n", 
+			//		g_imix_val,g_imix_val_pre,pre_ui_soc,cur_ui_soc,diff_ui_soc, IMAX_MAX_VALUE);			
 			}
 
         }
@@ -2586,7 +2586,7 @@ enum hrtimer_restart dlpt_notify_task(struct hrtimer *timer)
 {
     dlpt_notify_flag = KAL_TRUE; 
     wake_up_interruptible(&dlpt_notify_waiter);
-    PMICLOG("dlpt_notify_task is called\n");
+    //PMICLOG("dlpt_notify_task is called\n");
     
     return HRTIMER_NORESTART;
 }
@@ -2604,7 +2604,7 @@ int get_system_loading_ma(void)
         {
             fg_val = 0-fg_val; // charging
         }        
-        PMICLOG("[get_system_loading_ma] fg_val=%d\n", fg_val);
+        //PMICLOG("[get_system_loading_ma] fg_val=%d\n", fg_val);
     }
     
     return fg_val;
@@ -2627,7 +2627,7 @@ void dlpt_notify_init(void)
     }
     else
     {
-        PMICLOG("Create dlpt_notify_thread : done\n");
+        //PMICLOG("Create dlpt_notify_thread : done\n");
     }
 
 pmic_set_register_value(PMIC_RG_UVLO_VTHL,0);
@@ -2647,8 +2647,8 @@ pmic_set_register_value(PMIC_RG_UVLO_VTHL,0);
             PMICLOG("Invalid value(%d)\n", POWER_UVLO_VOLT_LEVEL);
             break;
     }    
-    PMICLOG("POWER_UVLO_VOLT_LEVEL=%d, [0x%x]=0x%x\n", 
-        POWER_UVLO_VOLT_LEVEL, MT6328_CHR_CON17, upmu_get_reg_value(MT6328_CHR_CON17));
+//     PMICLOG("POWER_UVLO_VOLT_LEVEL=%d, [0x%x]=0x%x\n", 
+//         POWER_UVLO_VOLT_LEVEL, MT6328_CHR_CON17, upmu_get_reg_value(MT6328_CHR_CON17));
 }
 
 #else
@@ -2730,7 +2730,7 @@ extern void kpd_pwrkey_pmic_handler(unsigned long pressed);
 void pwrkey_int_handler(void)
 {
 
-	PMICLOG("[pwrkey_int_handler] Press pwrkey %d\n",pmic_get_register_value(PMIC_PWRKEY_DEB));
+	//PMICLOG("[pwrkey_int_handler] Press pwrkey %d\n",pmic_get_register_value(PMIC_PWRKEY_DEB));
 
 #if defined (CONFIG_MTK_KERNEL_POWER_OFF_CHARGING)
 	if(g_boot_mode == KERNEL_POWER_OFF_CHARGING_BOOT)
@@ -2746,7 +2746,7 @@ void pwrkey_int_handler(void)
 
 void pwrkey_int_handler_r(void)
 {
-	PMICLOG("[pwrkey_int_handler_r] Release pwrkey %d\n",pmic_get_register_value(PMIC_PWRKEY_DEB));
+	//PMICLOG("[pwrkey_int_handler_r] Release pwrkey %d\n",pmic_get_register_value(PMIC_PWRKEY_DEB));
 #if defined (CONFIG_MTK_KERNEL_POWER_OFF_CHARGING)
 	if(g_boot_mode == KERNEL_POWER_OFF_CHARGING_BOOT && timer_pre != 0)
 	{
@@ -2755,7 +2755,7 @@ void pwrkey_int_handler_r(void)
 	        {
 	            long_pwrkey_press = true;
 	        }
-	        PMICLOG("[pmic_thread_kthread] timer_pos = %ld, timer_pre = %ld, timer_pos-timer_pre = %ld, long_pwrkey_press = %d\r\n",timer_pos, timer_pre, timer_pos-timer_pre, long_pwrkey_press);
+	        //PMICLOG("[pmic_thread_kthread] timer_pos = %ld, timer_pre = %ld, timer_pos-timer_pre = %ld, long_pwrkey_press = %d\r\n",timer_pos, timer_pre, timer_pos-timer_pre, long_pwrkey_press);
 	        if(long_pwrkey_press)   //500ms
 	        {
 	            PMICLOG("[pmic_thread_kthread] Power Key Pressed during kernel power off charging, reboot OS\r\n");
@@ -2775,7 +2775,7 @@ void pwrkey_int_handler_r(void)
 extern void kpd_pmic_rstkey_handler(unsigned long pressed);
 void homekey_int_handler(void)
 {
-	PMICLOG("[homekey_int_handler] Press homekey %d \n",pmic_get_register_value(PMIC_HOMEKEY_DEB));
+	//PMICLOG("[homekey_int_handler] Press homekey %d \n",pmic_get_register_value(PMIC_HOMEKEY_DEB));
 #if defined(CONFIG_MTK_FPGA)
 #else
 	kpd_pmic_rstkey_handler(0x1);   
@@ -2784,7 +2784,7 @@ void homekey_int_handler(void)
 
 void homekey_int_handler_r(void)
 {
-	PMICLOG("[homekey_int_handler_r] Release homekey %d \n",pmic_get_register_value(PMIC_HOMEKEY_DEB));
+	//PMICLOG("[homekey_int_handler_r] Release homekey %d \n",pmic_get_register_value(PMIC_HOMEKEY_DEB));
 #if defined(CONFIG_MTK_FPGA)
 #else
 	kpd_pmic_rstkey_handler(0x0);
@@ -2793,7 +2793,7 @@ void homekey_int_handler_r(void)
 
 void chrdet_int_handler(void)
 {
-	PMICLOG("[chrdet_int_handler]CHRDET status = %d....\n",pmic_get_register_value(PMIC_RGS_CHRDET));
+	//PMICLOG("[chrdet_int_handler]CHRDET status = %d....\n",pmic_get_register_value(PMIC_RGS_CHRDET));
 
 #ifdef CONFIG_MTK_KERNEL_POWER_OFF_CHARGING
 	if (!upmu_get_rgs_chrdet())
@@ -2814,7 +2814,7 @@ void chrdet_int_handler(void)
 
 void auxadc_imp_int_handler_r(void)
 {
-	PMICLOG("auxadc_imp_int_handler_r() =%d \n",pmic_get_register_value(PMIC_AUXADC_ADC_OUT_IMP));
+	//PMICLOG("auxadc_imp_int_handler_r() =%d \n",pmic_get_register_value(PMIC_AUXADC_ADC_OUT_IMP));
 	//clear IRQ
 	pmic_set_register_value(PMIC_AUXADC_CLR_IMP_CNT_STOP,1);
 	pmic_set_register_value(PMIC_AUXADC_IMPEDANCE_IRQ_CLR,1);	
@@ -2837,7 +2837,7 @@ struct wake_lock pmicThread_lock;
 
 void wake_up_pmic(void)
 {
-    PMICLOG("[wake_up_pmic]\r\n");
+    //PMICLOG("[wake_up_pmic]\r\n");
     wake_up_process(pmic_thread_handle);
     wake_lock(&pmicThread_lock);    
 }
@@ -2845,7 +2845,7 @@ EXPORT_SYMBOL(wake_up_pmic);
 
 void mt_pmic_eint_irq(void)
 {
-    PMICLOG("[mt_pmic_eint_irq] receive interrupt\n");
+    //PMICLOG("[mt_pmic_eint_irq] receive interrupt\n");
     wake_up_pmic();
     return ;
 }
@@ -2858,7 +2858,7 @@ void pmic_enable_interrupt(kal_uint32 intNo,kal_uint32 en,char *str)
 
 	if(shift >=ARRAY_SIZE(interrupts))
 	{
-		PMICLOG("[pmic_enable_interrupt] fail intno=%d \r\n",intNo);
+		//PMICLOG("[pmic_enable_interrupt] fail intno=%d \r\n",intNo);
 		return;
 	}
 
@@ -2874,8 +2874,8 @@ void pmic_enable_interrupt(kal_uint32 intNo,kal_uint32 en,char *str)
 		pmic_config_interface(interrupts[shift].clear,0x1,0x1,no);  
 	}
 
-	PMICLOG("[pmic_enable_interrupt] after [0x%x]=0x%x\r\n",
-		interrupts[shift].en,upmu_get_reg_value(interrupts[shift].en));	
+	//PMICLOG("[pmic_enable_interrupt] after [0x%x]=0x%x\r\n",
+	//	interrupts[shift].en,upmu_get_reg_value(interrupts[shift].en));	
 	
 } 
 
@@ -2891,7 +2891,7 @@ void pmic_register_interrupt_callback(kal_uint32 intNo,void (EINT_FUNC_PTR)(void
 		return;
 	}
 
-	PMICLOG("[pmic_register_interrupt_callback] intno=%d \r\n",intNo);
+	//PMICLOG("[pmic_register_interrupt_callback] intno=%d \r\n",intNo);
 
 	interrupts[shift].interrupts[no].callback=EINT_FUNC_PTR;
 
@@ -2952,10 +2952,10 @@ void PMIC_EINT_SETTING(void)
 	mt_eint_registration(g_eint_pmic_num,g_cust_eint_mt_pmic_type,mt_pmic_eint_irq,0);
 	mt_eint_unmask(g_eint_pmic_num);    
 
-	PMICLOG("[CUST_EINT] CUST_EINT_MT_PMIC_MT6325_NUM=%d\n", g_eint_pmic_num);
-	PMICLOG("[CUST_EINT] CUST_EINT_PMIC_DEBOUNCE_CN=%d\n", g_cust_eint_mt_pmic_debounce_cn);
-	PMICLOG("[CUST_EINT] CUST_EINT_PMIC_TYPE=%d\n", g_cust_eint_mt_pmic_type);
-	PMICLOG("[CUST_EINT] CUST_EINT_PMIC_DEBOUNCE_EN=%d\n", g_cust_eint_mt_pmic_debounce_en);
+// 	PMICLOG("[CUST_EINT] CUST_EINT_MT_PMIC_MT6325_NUM=%d\n", g_eint_pmic_num);
+// 	PMICLOG("[CUST_EINT] CUST_EINT_PMIC_DEBOUNCE_CN=%d\n", g_cust_eint_mt_pmic_debounce_cn);
+// 	PMICLOG("[CUST_EINT] CUST_EINT_PMIC_TYPE=%d\n", g_cust_eint_mt_pmic_type);
+// 	PMICLOG("[CUST_EINT] CUST_EINT_PMIC_DEBOUNCE_EN=%d\n", g_cust_eint_mt_pmic_debounce_en);
 
 }
 
@@ -2968,13 +2968,13 @@ static void pmic_int_handler(void)
 	{
 		kal_uint32 int_status_val=0;
 		int_status_val=upmu_get_reg_value(interrupts[i].address);
-    		PMICLOG("[PMIC_INT] addr[0x%x]=0x%x\n", interrupts[i].address,int_status_val);
+    		//PMICLOG("[PMIC_INT] addr[0x%x]=0x%x\n", interrupts[i].address,int_status_val);
 
 		for(j=0;j<PMIC_INT_WIDTH;j++)
 		{
 			if((int_status_val)&(1<<j))
 			{
-				PMICLOG("[PMIC_INT][%s]  \n", interrupts[i].interrupts[j].name);
+				//PMICLOG("[PMIC_INT][%s]  \n", interrupts[i].interrupts[j].name);
 				if (interrupts[i].interrupts[j].callback!=NULL)
 				{
 					interrupts[i].interrupts[j].callback();
@@ -3036,7 +3036,7 @@ static int pmic_thread_kthread(void *x)
 	sched_setscheduler(current, SCHED_FIFO, &param);
 	set_current_state(TASK_INTERRUPTIBLE);
 
-	PMICLOG("[PMIC_INT] enter\n");
+	//PMICLOG("[PMIC_INT] enter\n");
 
         pmic_enable_charger_detection_int(0);
 
@@ -3045,7 +3045,7 @@ static int pmic_thread_kthread(void *x)
 		mutex_lock(&pmic_mutex);
 
 		pwrap_eint_status = pmic_wrap_eint_status();    
-		PMICLOG("[PMIC_INT] pwrap_eint_status=0x%x\n", pwrap_eint_status);
+		//PMICLOG("[PMIC_INT] pwrap_eint_status=0x%x\n", pwrap_eint_status);
 
 		pmic_int_handler();
 
@@ -3055,7 +3055,7 @@ static int pmic_thread_kthread(void *x)
 		for (i = 0; i < ARRAY_SIZE(interrupts); i++) 
 		{
 			int_status_val=upmu_get_reg_value(interrupts[i].address);
-			PMICLOG("[PMIC_INT] after ,int_status_val[0x%x]=0x%x\n", interrupts[i].address,int_status_val);		
+			//PMICLOG("[PMIC_INT] after ,int_status_val[0x%x]=0x%x\n", interrupts[i].address,int_status_val);		
 		}	
 
 
@@ -3204,7 +3204,7 @@ static long pmic_ftm_ioctl(struct file *file, unsigned int cmd, unsigned long ar
                 ret = copy_from_user(adc_in_data, user_data_addr, 8);
                 adc_out_data[0] = is_ext_buck_exist();
                 ret = copy_to_user(user_data_addr, adc_out_data, 8); 
-                PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_BUCK_EXIST:%d\n", adc_out_data[0]);
+                //PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_BUCK_EXIST:%d\n", adc_out_data[0]);
             break;
         //#endif
 
@@ -3214,7 +3214,7 @@ static long pmic_ftm_ioctl(struct file *file, unsigned int cmd, unsigned long ar
                 ret = copy_from_user(adc_in_data, user_data_addr, 8);
                 adc_out_data[0] = is_ext_vbat_boost_exist();
                 ret = copy_to_user(user_data_addr, adc_out_data, 8); 
-                PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_VBAT_BOOST_EXIST:%d\n", adc_out_data[0]);
+                //PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_VBAT_BOOST_EXIST:%d\n", adc_out_data[0]);
             break;
         //#endif
         
@@ -3224,7 +3224,7 @@ static long pmic_ftm_ioctl(struct file *file, unsigned int cmd, unsigned long ar
                 ret = copy_from_user(adc_in_data, user_data_addr, 8);
                 adc_out_data[0] = is_ext_swchr_exist();
                 ret = copy_to_user(user_data_addr, adc_out_data, 8); 
-                PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_SWCHR_EXIST:%d\n", adc_out_data[0]);
+                //PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_SWCHR_EXIST:%d\n", adc_out_data[0]);
             break;
         //#endif
             case Get_IS_EXT_BUCK2_EXIST:
@@ -3232,7 +3232,7 @@ static long pmic_ftm_ioctl(struct file *file, unsigned int cmd, unsigned long ar
                 ret = copy_from_user(adc_in_data, user_data_addr, 8);
                 adc_out_data[0] = is_ext_buck2_exist();
                 ret = copy_to_user(user_data_addr, adc_out_data, 8); 
-                PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_BUCK2_EXIST:%d\n", adc_out_data[0]);
+                //PMICLOG("[pmic_ftm_ioctl] Get_IS_EXT_BUCK2_EXIST:%d\n", adc_out_data[0]);
             break;        
         default:
             PMICLOG("[pmic_ftm_ioctl] Error ID\n");
@@ -3286,7 +3286,7 @@ void pmic_ftm_init(void)
                                                    NULL, 
                                                    PMIC_DEVNAME);
     
-    PMICLOG("[pmic_ftm_init] Done\n");
+    //PMICLOG("[pmic_ftm_init] Done\n");
 }
 
 
@@ -3322,11 +3322,11 @@ void PMIC_INIT_SETTING_V1(void)
     //--------------------------------------------------------
 
         PMICLOG("[Kernel_PMIC_INIT_SETTING_V1] 6328 PMIC Chip = 0x%x\n",chip_version);
-	PMICLOG("[Kernel_PMIC_INIT_SETTING_V1] is_battery_remove =%d is_wdt_reboot=%d 6311=%d\n",is_battery_remove,is_wdt_reboot_pmic,is_ext_buck_exist());
+	//PMICLOG("[Kernel_PMIC_INIT_SETTING_V1] is_battery_remove =%d is_wdt_reboot=%d 6311=%d\n",is_battery_remove,is_wdt_reboot_pmic,is_ext_buck_exist());
 
    if(is_ext_buck_exist()==1)
    {
-           PMICLOG("[Kernel_PMIC_INIT_SETTING_V1] 2015-04-27 for turbo...\n");
+           //PMICLOG("[Kernel_PMIC_INIT_SETTING_V1] 2015-04-27 for turbo...\n");
 ret = pmic_config_interface(0x4,0x1,0x1,4); // [4:4]: RG_EN_DRVSEL; Ricky
 ret = pmic_config_interface(0xA,0x1,0x1,0); // [0:0]: DDUVLO_DEB_EN; Ricky
 ret = pmic_config_interface(0xA,0x1,0x1,11); // [11:11]: BIAS_GEN_EN_SEL; Luke, in pre-load for SMPS
@@ -3459,7 +3459,7 @@ ret = pmic_config_interface(0xF7A,0x1,0x1,7); // [7:7]: RG_ULC_DET_EN; Tim:Align
    }
    else
    {
-   	PMICLOG("[Kernel_PMIC_INIT_SETTING_V1] 2015-04-27...\n");
+   	//PMICLOG("[Kernel_PMIC_INIT_SETTING_V1] 2015-04-27...\n");
 ret = pmic_config_interface(0x4,0x1,0x1,4); // [4:4]: RG_EN_DRVSEL; Ricky
 ret = pmic_config_interface(0xA,0x1,0x1,0); // [0:0]: DDUVLO_DEB_EN; Ricky
 ret = pmic_config_interface(0xA,0x1,0x1,11); // [11:11]: BIAS_GEN_EN_SEL; Luke, in pre-load for SMPS
@@ -3597,7 +3597,7 @@ ret = pmic_config_interface(0xF7A,0x1,0x1,7); // [7:7]: RG_ULC_DET_EN; Tim:Align
 
 	if(crystal_exist_status()==0)
 	{
-		PMICLOG("32k-less VTCXO always on...\n");
+		//PMICLOG("32k-less VTCXO always on...\n");
 		pmic_set_register_value(PMIC_RG_VTCXO_0_ON_CTRL,0);		
 		pmic_set_register_value(PMIC_RG_VTCXO_0_EN,1);	
 		
@@ -3863,10 +3863,10 @@ void pmic_debug_init(void)
     }
 
     proc_create("dump_ldo_status", S_IRUGO | S_IWUSR, mt_pmic_dir, &pmic_debug_proc_fops);
-    PMICLOG("proc_create pmic_debug_proc_fops\n" );
+    //PMICLOG("proc_create pmic_debug_proc_fops\n" );
 
     proc_create("dump_pmic_reg", S_IRUGO | S_IWUSR, mt_pmic_dir, &pmic_dump_register_proc_fops);
-    PMICLOG("proc_create pmic_dump_register_proc_fops\n" );
+    //PMICLOG("proc_create pmic_dump_register_proc_fops\n" );
 
 
 
@@ -4278,15 +4278,15 @@ static int pmic_mt_probe(struct platform_device *dev)
 
 	if(pimix==NULL)
 	{
-		PMICLOG(" pimix==NULL len=%d \n",len);
+		//PMICLOG(" pimix==NULL len=%d \n",len);
 	}
 	else
 	{
-		PMICLOG(" pimix=%d \n",*pimix);
+		//PMICLOG(" pimix=%d \n",*pimix);
 		ptim_rac_val_avg=*pimix;
 	}
 
-	PMICLOG("******** MT pmic driver probe!! ********%d \n",ptim_rac_val_avg);
+	//PMICLOG("******** MT pmic driver probe!! ********%d \n",ptim_rac_val_avg);
 	
 
 	//get PMIC CID
@@ -4301,11 +4301,11 @@ static int pmic_mt_probe(struct platform_device *dev)
 		PMICLOG("[PMIC_INIT_SETTING_V1] delay to MT6311 init\n");
 #else
 		PMIC_INIT_SETTING_V1();
-		PMICLOG("[PMIC_INIT_SETTING_V1] Done\n");
+		//PMICLOG("[PMIC_INIT_SETTING_V1] Done\n");
 #endif 
 
 	PMIC_CUSTOM_SETTING_V1();
-	PMICLOG("[PMIC_CUSTOM_SETTING_V1] Done\n");
+	//PMICLOG("[PMIC_CUSTOM_SETTING_V1] Done\n");
 
 //#if defined(CONFIG_MTK_FPGA)
 #if 0
@@ -4321,11 +4321,11 @@ static int pmic_mt_probe(struct platform_device *dev)
 	else
 	{
 	    wake_up_process(pmic_thread_handle);
-	    PMICLOG("[pmic_thread_kthread_mt6325] kthread_create Done\n");
+	    //PMICLOG("[pmic_thread_kthread_mt6325] kthread_create Done\n");
 	} 
 
 	PMIC_EINT_SETTING();
-	PMICLOG("[PMIC_EINT_SETTING] Done\n");
+	//PMICLOG("[PMIC_EINT_SETTING] Done\n");
 #endif
 
 
@@ -4358,14 +4358,14 @@ static int pmic_mt_probe(struct platform_device *dev)
 #if 1 
 	pmic_set_register_value(PMIC_AUXADC_CK_AON,1); 
 	pmic_set_register_value(PMIC_RG_CLKSQ_EN_AUX_AP_MODE,1);
-	PMICLOG("[PMIC] auxadc 26M test : Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-	        MT6328_AUXADC_CON0, upmu_get_reg_value(MT6328_AUXADC_CON0),
-	        MT6328_TOP_CLKSQ, upmu_get_reg_value(MT6328_TOP_CLKSQ)	        
-	        );
+// 	PMICLOG("[PMIC] auxadc 26M test : Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+// 	        MT6328_AUXADC_CON0, upmu_get_reg_value(MT6328_AUXADC_CON0),
+// 	        MT6328_TOP_CLKSQ, upmu_get_reg_value(MT6328_TOP_CLKSQ)	        
+// 	        );
 #endif
 
 	pmic_debug_init();
-	PMICLOG("[PMIC] pmic_debug_init : done.\n" );
+// 	PMICLOG("[PMIC] pmic_debug_init : done.\n" );
 
 	pmic_ftm_init();
 
@@ -4422,41 +4422,41 @@ static int pmic_mt_probe(struct platform_device *dev)
 
 static int pmic_mt_remove(struct platform_device *dev)
 {
-    PMICLOG("******** MT pmic driver remove!! ********\n" );
+    //PMICLOG("******** MT pmic driver remove!! ********\n" );
 
     return 0;
 }
 
 static void pmic_mt_shutdown(struct platform_device *dev)
 {
-    PMICLOG("******** MT pmic driver shutdown!! ********\n" );
+    //PMICLOG("******** MT pmic driver shutdown!! ********\n" );
 }
 
 static int pmic_mt_suspend(struct platform_device *dev, pm_message_t state)
 {
 
-    PMICLOG("******** MT pmic driver suspend!! ********\n" );
+    //PMICLOG("******** MT pmic driver suspend!! ********\n" );
 
 #ifdef LOW_BATTERY_PROTECT
 	lbat_min_en_setting(0);
 	lbat_max_en_setting(0);
 	
-	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-		MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
-		MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
-		MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
-	);
+// 	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+// 		MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
+// 		MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
+// 		MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
+// 	);
 #endif
 	
 #ifdef BATTERY_OC_PROTECT
 	bat_oc_h_en_setting(0);
 	bat_oc_l_en_setting(0);
 	
-	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-        MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
-        MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
-        MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
-    );
+// 	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+//         MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
+//         MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
+//         MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
+//     );
 #endif
 
     return 0;
@@ -4465,7 +4465,7 @@ static int pmic_mt_suspend(struct platform_device *dev, pm_message_t state)
 static int pmic_mt_resume(struct platform_device *dev)
 {
 
-	PMICLOG("******** MT pmic driver resume!! ********\n" );
+	//PMICLOG("******** MT pmic driver resume!! ********\n" );
 
 #ifdef LOW_BATTERY_PROTECT
 	lbat_min_en_setting(0);
@@ -4488,11 +4488,11 @@ static int pmic_mt_resume(struct platform_device *dev)
 		//lbat_max_en_setting(0);
 	}
 	
-	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-        MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
-        MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
-        MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
-    );
+// 	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+//         MT6328_AUXADC_LBAT3, upmu_get_reg_value(MT6328_AUXADC_LBAT3),
+//         MT6328_AUXADC_LBAT4, upmu_get_reg_value(MT6328_AUXADC_LBAT4),
+//         MT6328_INT_CON0, upmu_get_reg_value(MT6328_INT_CON0)
+//     );
 #endif
 	
 #ifdef BATTERY_OC_PROTECT
@@ -4505,11 +4505,11 @@ static int pmic_mt_resume(struct platform_device *dev)
 	else
 		bat_oc_l_en_setting(1);
 	
-	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
-		MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
-		MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
-		MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
-	);
+// 	PMICLOG("Reg[0x%x]=0x%x, Reg[0x%x]=0x%x, Reg[0x%x]=0x%x\n", 
+// 		MT6328_FGADC_CON23, upmu_get_reg_value(MT6328_FGADC_CON23),
+// 		MT6328_FGADC_CON24, upmu_get_reg_value(MT6328_FGADC_CON24),
+// 		MT6328_INT_CON2, upmu_get_reg_value(MT6328_INT_CON2)
+// 	);
 #endif
 
 	return 0;
@@ -4539,8 +4539,8 @@ u32 pmic_Read_Efuse_HPOffset(int i)
     U32 reg_val = 0;
     U32 efusevalue;
 
-    printk("pmic_Read_Efuse_HPOffset(+)\n");
-	mutex_lock(&pmic_efuse_lock_mutex);
+//     printk("pmic_Read_Efuse_HPOffset(+)\n");
+// 	mutex_lock(&pmic_efuse_lock_mutex);
     //1. enable efuse ctrl engine clock
     ret = pmic_config_interface(0x027C, 0x0040, 0xFFFF, 0);
     ret = pmic_config_interface(0x0252, 0x0004, 0xFFFF, 0);
@@ -4568,14 +4568,14 @@ u32 pmic_Read_Efuse_HPOffset(int i)
      while (reg_val == 1)
         {
             ret = pmic_read_interface(0x0C1A, &reg_val, 0x1, 0);
-            printk("pmic_Read_Efuse_HPOffset polling 0x61A=0x%x\n", reg_val);
+            //printk("pmic_Read_Efuse_HPOffset polling 0x61A=0x%x\n", reg_val);
         }
 
         udelay(1000);//Need to delay at least 1ms for 0x61A and than can read 0xC18
 
     //6. read data
     efusevalue = upmu_get_reg_value(0x0C18);
-    printk("HPoffset : efuse=0x%x\n", efusevalue);
+    //printk("HPoffset : efuse=0x%x\n", efusevalue);
     //7. Disable efuse ctrl engine clock
     ret = pmic_config_interface(0x0250, 0x0004, 0xFFFF, 0);
     ret = pmic_config_interface(0x027A, 0x0040, 0xFFFF, 0);
@@ -4615,7 +4615,7 @@ static int __init pmic_mt_init(void)
 
 	pmic_auxadc_init();
 
-	PMICLOG("****[pmic_mt_init] Initialization : DONE !!\n");
+	//PMICLOG("****[pmic_mt_init] Initialization : DONE !!\n");
 
 	return 0;
 }

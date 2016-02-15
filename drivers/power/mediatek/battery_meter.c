@@ -47,7 +47,7 @@
 
 static DEFINE_MUTEX(FGADC_mutex);
 
-int Enable_FGADC_LOG = 1;
+int Enable_FGADC_LOG = BM_LOG_NONE;
 
 /* ============================================================ // */
 /* global variable */
@@ -2548,17 +2548,10 @@ kal_int32 get_dynamic_period(int first_use, int first_wakeup_time, int battery_c
 	static kal_int32 last_time=0;
 
 	kal_int32 ret_val = -1;
-	int check_fglog = 0;
 	kal_int32 I_sleep = 0;
 	kal_int32 new_time = 0;
 	kal_int32 vbat_val = 0;
 	int ret = 0;
-
-	check_fglog = Enable_FGADC_LOG;
-	if (check_fglog == 0) {
-		/* Enable_FGADC_LOG=1; */
-	}
-
 
 	vbat_val = g_sw_vbat_temp;
 
@@ -2566,9 +2559,6 @@ kal_int32 get_dynamic_period(int first_use, int first_wakeup_time, int battery_c
 
 	ret = battery_meter_ctrl(BATTERY_METER_CMD_GET_HW_FG_CAR, &car_instant);
 
-	if (check_fglog == 0) {
-		/* Enable_FGADC_LOG=0; */
-	}
 	if (car_instant < 0) {
 		car_instant = car_instant - (car_instant * 2);
 	}
@@ -2588,16 +2578,8 @@ kal_int32 get_dynamic_period(int first_use, int first_wakeup_time, int battery_c
 		I_sleep = ((car_wakeup - car_sleep) * 3600) / last_time;	/* unit: second */
 
 		if (I_sleep == 0) {
-			if (check_fglog == 0) {
-				/* Enable_FGADC_LOG=1; */
-			}
-
 			ret = battery_meter_ctrl(BATTERY_METER_CMD_GET_HW_FG_CURRENT, &I_sleep);
-
 			I_sleep = I_sleep / 10;
-			if (check_fglog == 0) {
-				/* Enable_FGADC_LOG=0; */
-			}
 		}
 
 		if (I_sleep == 0) {

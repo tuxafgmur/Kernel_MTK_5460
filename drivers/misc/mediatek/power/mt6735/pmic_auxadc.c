@@ -86,7 +86,7 @@ void pmic_auxadc_init(void)
 
 	mt6328_set_register_value(PMIC_RG_VBUF_EN,0x1);
 
-	PMICLOG("****[pmic_auxadc_init] DONE\n");
+	//PMICLOG("****[pmic_auxadc_init] DONE\n");
 }
 
 void pmic_auxadc_lock(void)
@@ -152,7 +152,7 @@ kal_int32 PMIC_IMM_GetCurrent(void)
 	wake_unlock(&pmicAuxadc_irq_lock);
 	mutex_unlock(&pmic_adc_mutex);
 
-	PMICLOG("[PMIC_IMM_GetCurrent(share lock)] raw batsns:%d raw isense:%d batsns:%d isense:%d iCharging:%d cnt:%d\n", batsns,isense,ADC_BAT_SENSE,ADC_I_SENSE,ICharging,count);
+	//PMICLOG("[PMIC_IMM_GetCurrent(share lock)] raw batsns:%d raw isense:%d batsns:%d isense:%d iCharging:%d cnt:%d\n", batsns,isense,ADC_BAT_SENSE,ADC_I_SENSE,ICharging,count);
 
 	return ICharging;
 
@@ -583,7 +583,7 @@ kal_uint32 PMIC_IMM_GetOneChannelValueMD(kal_uint8 dwChannel, int deCount, int t
 
 	wake_unlock(&pmicAuxadc_irq_lock);
 
-       PMICLOG("[AUXADC] PMIC_IMM_GetOneChannelValueMD ch=%d raw=%d data=%d\n", dwChannel, ret_data,adc_result);
+       //PMICLOG("[AUXADC] PMIC_IMM_GetOneChannelValueMD ch=%d raw=%d data=%d\n", dwChannel, ret_data,adc_result);
 
 	return ret_data;
 	//return adc_result;
